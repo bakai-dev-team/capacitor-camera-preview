@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Gallery</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="media-grid">
+    @for (item of galleryService.mediaItems(); track $index) {
+      <div class="media-item" (click)="openMediaViewer(item)">
+        @if (item.type === 'photo') {
+          <img [src]="item.src" [alt]="'Photo ' + $index" />
+        }
+        @if (item.type === 'video') {
+          <div class="video-thumbnail">
+            <video [src]="item.src" preload="metadata" muted></video>
+            <div class="play-icon">
+              <ion-icon name="play-circle-outline"></ion-icon>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</ion-content>
