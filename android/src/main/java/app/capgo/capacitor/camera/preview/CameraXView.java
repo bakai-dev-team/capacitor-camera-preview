@@ -289,15 +289,15 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                 }
                 // Check for WebP signature (RIFF ... WEBP)
                 else if (
-                    data[0] == 0x52 &&
-                    data[1] == 0x49 &&
-                    data[2] == 0x46 &&
-                    data[3] == 0x46 &&
-                    data.length >= 12 &&
-                    data[8] == 0x57 &&
-                    data[9] == 0x45 &&
-                    data[10] == 0x42 &&
-                    data[11] == 0x50
+                        data[0] == 0x52 &&
+                                data[1] == 0x49 &&
+                                data[2] == 0x46 &&
+                                data[3] == 0x46 &&
+                                data.length >= 12 &&
+                                data[8] == 0x57 &&
+                                data[9] == 0x45 &&
+                                data[10] == 0x42 &&
+                                data[11] == 0x50
                 ) {
                     extension = ".webp";
                     mimeType = "image/webp";
@@ -305,8 +305,8 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
             }
 
             File photo = new File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new java.util.Date()) + extension
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                    "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new java.util.Date()) + extension
             );
             FileOutputStream fos = new FileOutputStream(photo);
             fos.write(data);
@@ -332,15 +332,15 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                     extension = ".jpg";
                     mimeType = "image/jpeg";
                 } else if (
-                    data[0] == 0x52 &&
-                    data[1] == 0x49 &&
-                    data[2] == 0x46 &&
-                    data[3] == 0x46 &&
-                    data.length >= 12 &&
-                    data[8] == 0x57 &&
-                    data[9] == 0x45 &&
-                    data[10] == 0x42 &&
-                    data[11] == 0x50
+                        data[0] == 0x52 &&
+                                data[1] == 0x49 &&
+                                data[2] == 0x46 &&
+                                data[3] == 0x46 &&
+                                data.length >= 12 &&
+                                data[8] == 0x57 &&
+                                data[9] == 0x45 &&
+                                data[10] == 0x42 &&
+                                data[11] == 0x50
                 ) {
                     extension = ".webp";
                     mimeType = "image/webp";
@@ -348,8 +348,8 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
             }
 
             File photo = new File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new java.util.Date()) + extension
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                    "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new java.util.Date()) + extension
             );
 
             FileOutputStream fos = new FileOutputStream(photo);
@@ -494,20 +494,20 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
     private void setupCamera() {
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(context);
         cameraProviderFuture.addListener(
-            () -> {
-                try {
-                    cameraProvider = cameraProviderFuture.get();
-                    setupPreviewView();
-                    bindCameraUseCases();
-                } catch (Exception e) {
-                    // Restore webView background on error
-                    restoreWebViewBackground();
-                    if (listener != null) {
-                        listener.onCameraStartError("Error initializing camera: " + e.getMessage());
+                () -> {
+                    try {
+                        cameraProvider = cameraProviderFuture.get();
+                        setupPreviewView();
+                        bindCameraUseCases();
+                    } catch (Exception e) {
+                        // Restore webView background on error
+                        restoreWebViewBackground();
+                        if (listener != null) {
+                            listener.onCameraStartError("Error initializing camera: " + e.getMessage());
+                        }
                     }
-                }
-            },
-            mainExecutor
+                },
+                mainExecutor
         );
     }
 
@@ -549,8 +549,8 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
         // Focus and zoom are controlled exclusively via JS API calls for parity with iOS.
 
         previewContainer.addView(
-            previewView,
-            new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+                previewView,
+                new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
         );
 
         // Create and setup the grid overlay
@@ -559,8 +559,8 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
         gridOverlayView.setClickable(false);
         gridOverlayView.setFocusable(false);
         previewContainer.addView(
-            gridOverlayView,
-            new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+                gridOverlayView,
+                new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
         );
         // Set grid mode after adding to container to ensure proper layout
         gridOverlayView.post(() -> {
@@ -588,15 +588,15 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                 Log.d(TAG, "========================");
                 Log.d(TAG, "ACTUAL CAMERA VIEW POSITION (after layout):");
                 Log.d(
-                    TAG,
-                    "Container position - Left: " +
-                        previewContainer.getLeft() +
-                        ", Top: " +
-                        previewContainer.getTop() +
-                        ", Right: " +
-                        previewContainer.getRight() +
-                        ", Bottom: " +
-                        previewContainer.getBottom()
+                        TAG,
+                        "Container position - Left: " +
+                                previewContainer.getLeft() +
+                                ", Top: " +
+                                previewContainer.getTop() +
+                                ", Right: " +
+                                previewContainer.getRight() +
+                                ", Bottom: " +
+                                previewContainer.getBottom()
                 );
                 Log.d(TAG, "Container size - Width: " + previewContainer.getWidth() + ", Height: " + previewContainer.getHeight());
 
@@ -608,6 +608,7 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                 }
                 Log.d(TAG, "========================");
             });
+            previewContainer.setBackgroundColor(Color.BLACK);
         }
     }
 
@@ -669,34 +670,34 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
 
         Log.d(TAG, "======================== CALCULATE PREVIEW LAYOUT PARAMS ========================");
         Log.d(
-            TAG,
-            "Screen dimensions - Pixels: " +
-                screenWidthPx +
-                "x" +
-                screenHeightPx +
-                ", DP: " +
-                screenWidthDp +
-                "x" +
-                screenHeightDp +
-                ", Density: " +
-                density
+                TAG,
+                "Screen dimensions - Pixels: " +
+                        screenWidthPx +
+                        "x" +
+                        screenHeightPx +
+                        ", DP: " +
+                        screenWidthDp +
+                        "x" +
+                        screenHeightDp +
+                        ", Density: " +
+                        density
         );
         Log.d(TAG, "WebView dimensions: " + webViewWidth + "x" + webViewHeight);
         Log.d(TAG, "Parent dimensions: " + parentWidth + "x" + parentHeight);
         Log.d(
-            TAG,
-            "SessionConfig values - x:" +
-                x +
-                " y:" +
-                y +
-                " width:" +
-                width +
-                " height:" +
-                height +
-                " aspectRatio:" +
-                aspectRatio +
-                " isCentered:" +
-                sessionConfig.isCentered()
+                TAG,
+                "SessionConfig values - x:" +
+                        x +
+                        " y:" +
+                        y +
+                        " width:" +
+                        width +
+                        " height:" +
+                        height +
+                        " aspectRatio:" +
+                        aspectRatio +
+                        " isCentered:" +
+                        sessionConfig.isCentered()
         );
 
         // Apply aspect ratio if specified
@@ -710,8 +711,8 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                     boolean isPortrait = context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
 
                     Log.d(
-                        TAG,
-                        "Aspect ratio parsing - Original: " + aspectRatio + " (width=" + ratioWidth + ", height=" + ratioHeight + ")"
+                            TAG,
+                            "Aspect ratio parsing - Original: " + aspectRatio + " (width=" + ratioWidth + ", height=" + ratioHeight + ")"
                     );
                     Log.d(TAG, "Device orientation: " + (isPortrait ? "PORTRAIT" : "LANDSCAPE"));
 
@@ -729,8 +730,8 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                     double maxHeightByWidth = screenWidthPx / ratio;
 
                     Log.d(
-                        TAG,
-                        "Aspect ratio calculations - maxWidthByHeight: " + maxWidthByHeight + ", maxHeightByWidth: " + maxHeightByWidth
+                            TAG,
+                            "Aspect ratio calculations - maxWidthByHeight: " + maxWidthByHeight + ", maxHeightByWidth: " + maxHeightByWidth
                     );
 
                     if (maxWidthByHeight <= screenWidthPx) {
@@ -768,15 +769,15 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
         layoutParams.topMargin = y;
 
         Log.d(
-            TAG,
-            "Final layout params - Margins: left=" +
-                layoutParams.leftMargin +
-                ", top=" +
-                layoutParams.topMargin +
-                ", Size: " +
-                width +
-                "x" +
-                height
+                TAG,
+                "Final layout params - Margins: left=" +
+                        layoutParams.leftMargin +
+                        ", top=" +
+                        layoutParams.topMargin +
+                        ", Size: " +
+                        width +
+                        "x" +
+                        height
         );
         Log.d(TAG, "================================================================================");
 
@@ -809,16 +810,16 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
         mainExecutor.execute(() -> {
             try {
                 Log.d(
-                    TAG,
-                    "Building camera selector with deviceId: " +
-                        sessionConfig.getDeviceId() +
-                        " and position: " +
-                        sessionConfig.getPosition()
+                        TAG,
+                        "Building camera selector with deviceId: " +
+                                sessionConfig.getDeviceId() +
+                                " and position: " +
+                                sessionConfig.getPosition()
                 );
                 currentCameraSelector = buildCameraSelector();
 
                 ResolutionSelector.Builder resolutionSelectorBuilder = new ResolutionSelector.Builder().setResolutionStrategy(
-                    ResolutionStrategy.HIGHEST_AVAILABLE_STRATEGY
+                        ResolutionStrategy.HIGHEST_AVAILABLE_STRATEGY
                 );
 
                 if (sessionConfig.getAspectRatio() != null) {
@@ -830,24 +831,24 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                         aspectRatio = AspectRatio.RATIO_4_3;
                     }
                     resolutionSelectorBuilder.setAspectRatioStrategy(
-                        new AspectRatioStrategy(aspectRatio, AspectRatioStrategy.FALLBACK_RULE_AUTO)
+                            new AspectRatioStrategy(aspectRatio, AspectRatioStrategy.FALLBACK_RULE_AUTO)
                     );
                 }
 
                 ResolutionSelector resolutionSelector = resolutionSelectorBuilder.build();
 
                 int rotation = previewView != null && previewView.getDisplay() != null
-                    ? previewView.getDisplay().getRotation()
-                    : android.view.Surface.ROTATION_0;
+                        ? previewView.getDisplay().getRotation()
+                        : android.view.Surface.ROTATION_0;
 
                 Preview preview = new Preview.Builder().setResolutionSelector(resolutionSelector).setTargetRotation(rotation).build();
                 // Keep reference to preview use case for later re-binding (e.g., when enabling video)
                 imageCapture = new ImageCapture.Builder()
-                    .setResolutionSelector(resolutionSelector)
-                    .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
-                    .setFlashMode(currentFlashMode)
-                    .setTargetRotation(rotation)
-                    .build();
+                        .setResolutionSelector(resolutionSelector)
+                        .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+                        .setFlashMode(currentFlashMode)
+                        .setTargetRotation(rotation)
+                        .build();
                 sampleImageCapture = imageCapture;
 
                 // Only setup VideoCapture if enableVideoMode is true
@@ -861,23 +862,23 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                         case "low":
                             // Target SD, allow falling back to lower if needed
                             qualitySelector = QualitySelector.fromOrderedList(
-                                Arrays.asList(Quality.SD, Quality.LOWEST),
-                                FallbackStrategy.lowerQualityOrHigherThan(Quality.SD)
+                                    Arrays.asList(Quality.SD, Quality.LOWEST),
+                                    FallbackStrategy.lowerQualityOrHigherThan(Quality.SD)
                             );
                             break;
                         case "medium":
                             // Target HD, allow falling back to SD
                             qualitySelector = QualitySelector.fromOrderedList(
-                                Arrays.asList(Quality.HD, Quality.SD),
-                                FallbackStrategy.lowerQualityOrHigherThan(Quality.HD)
+                                    Arrays.asList(Quality.HD, Quality.SD),
+                                    FallbackStrategy.lowerQualityOrHigherThan(Quality.HD)
                             );
                             break;
                         case "high":
                         default:
                             // Target FHD allow falling back SD
                             qualitySelector = QualitySelector.fromOrderedList(
-                                Arrays.asList(Quality.FHD, Quality.HD, Quality.SD),
-                                FallbackStrategy.higherQualityOrLowerThan(Quality.FHD)
+                                    Arrays.asList(Quality.FHD, Quality.HD, Quality.SD),
+                                    FallbackStrategy.higherQualityOrLowerThan(Quality.FHD)
                             );
                             break;
                     }
@@ -917,16 +918,16 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                 ZoomState zoomState = cameraInfo.getZoomState().getValue();
                 if (zoomState != null) {
                     Log.d(
-                        TAG,
-                        "Active Zoom State: " +
-                            "min=" +
-                            zoomState.getMinZoomRatio() +
-                            ", " +
-                            "max=" +
-                            zoomState.getMaxZoomRatio() +
-                            ", " +
-                            "current=" +
-                            zoomState.getZoomRatio()
+                            TAG,
+                            "Active Zoom State: " +
+                                    "min=" +
+                                    zoomState.getMinZoomRatio() +
+                                    ", " +
+                                    "max=" +
+                                    zoomState.getMaxZoomRatio() +
+                                    ", " +
+                                    "current=" +
+                                    zoomState.getZoomRatio()
                     );
                 }
 
@@ -949,14 +950,14 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                     if (currentPreviewResolution != null) {
                         double actualRatio = (double) currentPreviewResolution.getWidth() / (double) currentPreviewResolution.getHeight();
                         Log.d(
-                            TAG,
-                            "Actual preview aspect ratio: " +
-                                actualRatio +
-                                " (width=" +
-                                currentPreviewResolution.getWidth() +
-                                ", height=" +
-                                currentPreviewResolution.getHeight() +
-                                ")"
+                                TAG,
+                                "Actual preview aspect ratio: " +
+                                        actualRatio +
+                                        " (width=" +
+                                        currentPreviewResolution.getWidth() +
+                                        ", height=" +
+                                        currentPreviewResolution.getHeight() +
+                                        ")"
                         );
 
                         // Compare with requested ratio
@@ -964,15 +965,15 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                             double expectedRatio = 4.0 / 3.0;
                             double difference = Math.abs(actualRatio - expectedRatio);
                             Log.d(
-                                TAG,
-                                "4:3 ratio check - Expected: " + expectedRatio + ", Actual: " + actualRatio + ", Difference: " + difference
+                                    TAG,
+                                    "4:3 ratio check - Expected: " + expectedRatio + ", Actual: " + actualRatio + ", Difference: " + difference
                             );
                         } else if ("16:9".equals(sessionConfig.getAspectRatio())) {
                             double expectedRatio = 16.0 / 9.0;
                             double difference = Math.abs(actualRatio - expectedRatio);
                             Log.d(
-                                TAG,
-                                "16:9 ratio check - Expected: " + expectedRatio + ", Actual: " + actualRatio + ", Difference: " + difference
+                                    TAG,
+                                    "16:9 ratio check - Expected: " + expectedRatio + ", Actual: " + actualRatio + ", Difference: " + difference
                             );
                         }
                     }
@@ -999,13 +1000,13 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                         if (initialZoom < minZoom || initialZoom > maxZoom) {
                             if (listener != null) {
                                 listener.onCameraStartError(
-                                    "Initial zoom level " +
-                                        initialZoom +
-                                        " is not available. " +
-                                        "Valid range is " +
-                                        minZoom +
-                                        " to " +
-                                        maxZoom
+                                        "Initial zoom level " +
+                                                initialZoom +
+                                                " is not available. " +
+                                                "Valid range is " +
+                                                minZoom +
+                                                " to " +
+                                                maxZoom
                                 );
                                 return;
                             }
@@ -1028,15 +1029,15 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                         int actualY = getPreviewY();
 
                         Log.d(
-                            TAG,
-                            "onCameraStarted callback - actualX=" +
-                                actualX +
-                                ", actualY=" +
-                                actualY +
-                                ", actualWidth=" +
-                                actualWidth +
-                                ", actualHeight=" +
-                                actualHeight
+                                TAG,
+                                "onCameraStarted callback - actualX=" +
+                                        actualX +
+                                        ", actualY=" +
+                                        actualY +
+                                        ", actualWidth=" +
+                                        actualWidth +
+                                        ", actualHeight=" +
+                                        actualHeight
                         );
 
                         // Update grid overlay bounds after camera is started
@@ -1136,13 +1137,13 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
     }
 
     public void capturePhoto(
-        int quality,
-        final boolean saveToGallery,
-        Integer width,
-        Integer height,
-        Location location,
-        final boolean embedTimestamp,
-        final boolean embedLocation
+            int quality,
+            final boolean saveToGallery,
+            Integer width,
+            Integer height,
+            Location location,
+            final boolean embedTimestamp,
+            final boolean embedLocation
     ) {
         if (imageCapture == null) {
             if (listener != null) {
@@ -1164,19 +1165,19 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
         Log.d(TAG, "capturePhoto: Set target rotation to " + rotation + " from accelerometer");
 
         Log.d(
-            TAG,
-            "capturePhoto: Starting photo capture with: " +
-                quality +
-                ", width: " +
-                width +
-                ", height: " +
-                height +
-                ", saveToGallery: " +
-                saveToGallery +
-                ", embedTimestamp: " +
-                embedTimestamp +
-                ", embedLocation: " +
-                embedLocation
+                TAG,
+                "capturePhoto: Starting photo capture with: " +
+                        quality +
+                        ", width: " +
+                        width +
+                        ", height: " +
+                        height +
+                        ", saveToGallery: " +
+                        saveToGallery +
+                        ", embedTimestamp: " +
+                        embedTimestamp +
+                        ", embedLocation: " +
+                        embedLocation
         );
 
         boolean dispatched = false;
@@ -1191,150 +1192,19 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                 metadata.setLocation(location);
             }
             ImageCapture.OutputFileOptions outputFileOptions = new ImageCapture.OutputFileOptions.Builder(imageStream)
-                .setMetadata(metadata)
-                .build();
+                    .setMetadata(metadata)
+                    .build();
 
             imageCapture.takePicture(
-                outputFileOptions,
-                cameraExecutor,
-                new ImageCapture.OnImageSavedCallback() {
-                    @Override
-                    public void onError(@NonNull ImageCaptureException exception) {
-                        Log.e(TAG, "capturePhoto: Photo capture failed", exception);
-                        if (listener != null) {
-                            listener.onPictureTakenError("Photo capture failed: " + exception.getMessage());
-                        }
-                        // End of capture lifecycle
-                        synchronized (captureLock) {
-                            isCapturingPhoto = false;
-                            if (stopRequested) {
-                                performImmediateStop();
-                            }
-                        }
-                        endOperation("capturePhoto");
-                    }
-
-                    @Override
-                    public void onImageSaved(@NonNull ImageCapture.OutputFileResults output) {
-                        try {
-                            byte[] originalCaptureBytes = imageStream.toByteArray();
-                            byte[] bytes = originalCaptureBytes; // will be replaced if we transform
-                            int finalWidthOut = -1;
-                            int finalHeightOut = -1;
-                            boolean transformedPixels = false;
-
-                            ExifInterface exifInterface = new ExifInterface(new ByteArrayInputStream(originalCaptureBytes));
-                            // Build EXIF JSON from captured bytes (location applied by metadata if provided)
-                            JSONObject exifData = getExifData(exifInterface);
-
-                            if (width != null || height != null) {
-                                Bitmap bitmap = BitmapFactory.decodeByteArray(originalCaptureBytes, 0, originalCaptureBytes.length);
-                                bitmap = applyExifOrientation(bitmap, exifInterface);
-                                Bitmap resizedBitmap = resizeBitmapToMaxDimensions(bitmap, width, height);
-                                if (embedTimestamp || embedLocation) {
-                                    resizedBitmap = drawTimestampAndLocationOntoBitmap(
-                                        resizedBitmap,
-                                        exifInterface,
-                                        embedTimestamp,
-                                        embedLocation
-                                    );
-                                }
-                                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream);
-                                bytes = stream.toByteArray();
-                                transformedPixels = true;
-
-                                // Update EXIF JSON to reflect new dimensions; no in-place EXIF write to bytes
-                                try {
-                                    exifData.put("PixelXDimension", resizedBitmap.getWidth());
-                                    exifData.put("PixelYDimension", resizedBitmap.getHeight());
-                                    exifData.put("ImageWidth", resizedBitmap.getWidth());
-                                    exifData.put("ImageLength", resizedBitmap.getHeight());
-                                    exifData.put("Orientation", Integer.toString(ExifInterface.ORIENTATION_NORMAL));
-                                } catch (Exception ignore) {}
-                                finalWidthOut = resizedBitmap.getWidth();
-                                finalHeightOut = resizedBitmap.getHeight();
-                            } else {
-                                // No explicit size/ratio: crop to match current preview content
-                                Bitmap originalBitmap = BitmapFactory.decodeByteArray(originalCaptureBytes, 0, originalCaptureBytes.length);
-                                originalBitmap = applyExifOrientation(originalBitmap, exifInterface);
-                                Bitmap previewCropped = cropBitmapToMatchPreview(originalBitmap);
-                                if (embedTimestamp || embedLocation) {
-                                    previewCropped = drawTimestampAndLocationOntoBitmap(
-                                        previewCropped,
-                                        exifInterface,
-                                        embedTimestamp,
-                                        embedLocation
-                                    );
-                                }
-                                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                                previewCropped.compress(Bitmap.CompressFormat.JPEG, quality, stream);
-                                bytes = stream.toByteArray();
-                                transformedPixels = true;
-                                // Update EXIF JSON to reflect cropped dimensions; no in-place EXIF write to bytes
-                                try {
-                                    exifData.put("PixelXDimension", previewCropped.getWidth());
-                                    exifData.put("PixelYDimension", previewCropped.getHeight());
-                                    exifData.put("ImageWidth", previewCropped.getWidth());
-                                    exifData.put("ImageLength", previewCropped.getHeight());
-                                    exifData.put("Orientation", Integer.toString(ExifInterface.ORIENTATION_NORMAL));
-                                } catch (Exception ignore) {}
-                                finalWidthOut = previewCropped.getWidth();
-                                finalHeightOut = previewCropped.getHeight();
-                            }
-
-                            // After any transform, inject EXIF back into the in-memory JPEG bytes (no temp file)
-                            if (transformedPixels) {
-                                Integer fW = (finalWidthOut > 0) ? finalWidthOut : null;
-                                Integer fH = (finalHeightOut > 0) ? finalHeightOut : null;
-                                bytes = injectExifInMemory(bytes, originalCaptureBytes, fW, fH);
-                            }
-
-                            // Save to gallery asynchronously if requested, copy EXIF to file
-                            if (saveToGallery) {
-                                final byte[] finalBytes = bytes;
-                                final ExifInterface exifForFile = exifInterface;
-                                final Integer fW = (finalWidthOut > 0) ? finalWidthOut : null;
-                                final Integer fH = (finalHeightOut > 0) ? finalHeightOut : null;
-                                new Thread(() -> saveImageToGallery(finalBytes, exifForFile, fW, fH)).start();
-                            }
-
-                            String resultValue;
-                            boolean returnFileUri = sessionConfig != null && sessionConfig.isStoreToFile();
-                            if (returnFileUri) {
-                                // Persist processed image to a file and return its URI to avoid heavy base64 bridging
-                                try {
-                                    String fileName =
-                                        "cpcp_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new java.util.Date()) + ".jpg";
-                                    File outDir = context.getCacheDir();
-                                    File outFile = new File(outDir, fileName);
-                                    FileOutputStream outFos = new FileOutputStream(outFile);
-                                    outFos.write(bytes);
-                                    outFos.close();
-
-                                    // No EXIF rewrite here; bytes already contain EXIF when needed
-
-                                    // Return a file path; apps can convert via Capacitor.convertFileSrc on JS side
-                                    resultValue = outFile.getAbsolutePath();
-                                } catch (IOException ioEx) {
-                                    Log.e(TAG, "capturePhoto: Failed to write image file", ioEx);
-                                    // Fallback to base64 if file write fails
-                                    resultValue = Base64.encodeToString(bytes, Base64.NO_WRAP);
-                                }
-                            } else {
-                                // Backward-compatible behavior
-                                resultValue = Base64.encodeToString(bytes, Base64.NO_WRAP);
-                            }
-
+                    outputFileOptions,
+                    cameraExecutor,
+                    new ImageCapture.OnImageSavedCallback() {
+                        @Override
+                        public void onError(@NonNull ImageCaptureException exception) {
+                            Log.e(TAG, "capturePhoto: Photo capture failed", exception);
                             if (listener != null) {
-                                listener.onPictureTaken(resultValue, exifData);
+                                listener.onPictureTakenError("Photo capture failed: " + exception.getMessage());
                             }
-                        } catch (Exception e) {
-                            Log.e(TAG, "capturePhoto: Error processing image", e);
-                            if (listener != null) {
-                                listener.onPictureTakenError("Error processing image: " + e.getMessage());
-                            }
-                        } finally {
                             // End of capture lifecycle
                             synchronized (captureLock) {
                                 isCapturingPhoto = false;
@@ -1344,8 +1214,139 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                             }
                             endOperation("capturePhoto");
                         }
+
+                        @Override
+                        public void onImageSaved(@NonNull ImageCapture.OutputFileResults output) {
+                            try {
+                                byte[] originalCaptureBytes = imageStream.toByteArray();
+                                byte[] bytes = originalCaptureBytes; // will be replaced if we transform
+                                int finalWidthOut = -1;
+                                int finalHeightOut = -1;
+                                boolean transformedPixels = false;
+
+                                ExifInterface exifInterface = new ExifInterface(new ByteArrayInputStream(originalCaptureBytes));
+                                // Build EXIF JSON from captured bytes (location applied by metadata if provided)
+                                JSONObject exifData = getExifData(exifInterface);
+
+                                if (width != null || height != null) {
+                                    Bitmap bitmap = BitmapFactory.decodeByteArray(originalCaptureBytes, 0, originalCaptureBytes.length);
+                                    bitmap = applyExifOrientation(bitmap, exifInterface);
+                                    Bitmap resizedBitmap = resizeBitmapToMaxDimensions(bitmap, width, height);
+                                    if (embedTimestamp || embedLocation) {
+                                        resizedBitmap = drawTimestampAndLocationOntoBitmap(
+                                                resizedBitmap,
+                                                exifInterface,
+                                                embedTimestamp,
+                                                embedLocation
+                                        );
+                                    }
+                                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                    resizedBitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream);
+                                    bytes = stream.toByteArray();
+                                    transformedPixels = true;
+
+                                    // Update EXIF JSON to reflect new dimensions; no in-place EXIF write to bytes
+                                    try {
+                                        exifData.put("PixelXDimension", resizedBitmap.getWidth());
+                                        exifData.put("PixelYDimension", resizedBitmap.getHeight());
+                                        exifData.put("ImageWidth", resizedBitmap.getWidth());
+                                        exifData.put("ImageLength", resizedBitmap.getHeight());
+                                        exifData.put("Orientation", Integer.toString(ExifInterface.ORIENTATION_NORMAL));
+                                    } catch (Exception ignore) {}
+                                    finalWidthOut = resizedBitmap.getWidth();
+                                    finalHeightOut = resizedBitmap.getHeight();
+                                } else {
+                                    // No explicit size/ratio: crop to match current preview content
+                                    Bitmap originalBitmap = BitmapFactory.decodeByteArray(originalCaptureBytes, 0, originalCaptureBytes.length);
+                                    originalBitmap = applyExifOrientation(originalBitmap, exifInterface);
+                                    Bitmap previewCropped = cropBitmapToMatchPreview(originalBitmap);
+                                    if (embedTimestamp || embedLocation) {
+                                        previewCropped = drawTimestampAndLocationOntoBitmap(
+                                                previewCropped,
+                                                exifInterface,
+                                                embedTimestamp,
+                                                embedLocation
+                                        );
+                                    }
+                                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                    previewCropped.compress(Bitmap.CompressFormat.JPEG, quality, stream);
+                                    bytes = stream.toByteArray();
+                                    transformedPixels = true;
+                                    // Update EXIF JSON to reflect cropped dimensions; no in-place EXIF write to bytes
+                                    try {
+                                        exifData.put("PixelXDimension", previewCropped.getWidth());
+                                        exifData.put("PixelYDimension", previewCropped.getHeight());
+                                        exifData.put("ImageWidth", previewCropped.getWidth());
+                                        exifData.put("ImageLength", previewCropped.getHeight());
+                                        exifData.put("Orientation", Integer.toString(ExifInterface.ORIENTATION_NORMAL));
+                                    } catch (Exception ignore) {}
+                                    finalWidthOut = previewCropped.getWidth();
+                                    finalHeightOut = previewCropped.getHeight();
+                                }
+
+                                // After any transform, inject EXIF back into the in-memory JPEG bytes (no temp file)
+                                if (transformedPixels) {
+                                    Integer fW = (finalWidthOut > 0) ? finalWidthOut : null;
+                                    Integer fH = (finalHeightOut > 0) ? finalHeightOut : null;
+                                    bytes = injectExifInMemory(bytes, originalCaptureBytes, fW, fH);
+                                }
+
+                                // Save to gallery asynchronously if requested, copy EXIF to file
+                                if (saveToGallery) {
+                                    final byte[] finalBytes = bytes;
+                                    final ExifInterface exifForFile = exifInterface;
+                                    final Integer fW = (finalWidthOut > 0) ? finalWidthOut : null;
+                                    final Integer fH = (finalHeightOut > 0) ? finalHeightOut : null;
+                                    new Thread(() -> saveImageToGallery(finalBytes, exifForFile, fW, fH)).start();
+                                }
+
+                                String resultValue;
+                                boolean returnFileUri = sessionConfig != null && sessionConfig.isStoreToFile();
+                                if (returnFileUri) {
+                                    // Persist processed image to a file and return its URI to avoid heavy base64 bridging
+                                    try {
+                                        String fileName =
+                                                "cpcp_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new java.util.Date()) + ".jpg";
+                                        File outDir = context.getCacheDir();
+                                        File outFile = new File(outDir, fileName);
+                                        FileOutputStream outFos = new FileOutputStream(outFile);
+                                        outFos.write(bytes);
+                                        outFos.close();
+
+                                        // No EXIF rewrite here; bytes already contain EXIF when needed
+
+                                        // Return a file path; apps can convert via Capacitor.convertFileSrc on JS side
+                                        resultValue = outFile.getAbsolutePath();
+                                    } catch (IOException ioEx) {
+                                        Log.e(TAG, "capturePhoto: Failed to write image file", ioEx);
+                                        // Fallback to base64 if file write fails
+                                        resultValue = Base64.encodeToString(bytes, Base64.NO_WRAP);
+                                    }
+                                } else {
+                                    // Backward-compatible behavior
+                                    resultValue = Base64.encodeToString(bytes, Base64.NO_WRAP);
+                                }
+
+                                if (listener != null) {
+                                    listener.onPictureTaken(resultValue, exifData);
+                                }
+                            } catch (Exception e) {
+                                Log.e(TAG, "capturePhoto: Error processing image", e);
+                                if (listener != null) {
+                                    listener.onPictureTakenError("Error processing image: " + e.getMessage());
+                                }
+                            } finally {
+                                // End of capture lifecycle
+                                synchronized (captureLock) {
+                                    isCapturingPhoto = false;
+                                    if (stopRequested) {
+                                        performImmediateStop();
+                                    }
+                                }
+                                endOperation("capturePhoto");
+                            }
+                        }
                     }
-                }
             );
 
             dispatched = true;
@@ -1578,25 +1579,25 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
         try {
             // Quick signature check for JPEG (FF D8 FF)
             if (
-                targetJpeg == null ||
-                targetJpeg.length < 3 ||
-                (targetJpeg[0] & 0xFF) != 0xFF ||
-                (targetJpeg[1] & 0xFF) != 0xD8 ||
-                (targetJpeg[2] & 0xFF) != 0xFF
+                    targetJpeg == null ||
+                            targetJpeg.length < 3 ||
+                            (targetJpeg[0] & 0xFF) != 0xFF ||
+                            (targetJpeg[1] & 0xFF) != 0xD8 ||
+                            (targetJpeg[2] & 0xFF) != 0xFF
             ) {
                 return targetJpeg; // Not a JPEG; nothing to do
             }
 
             // Use Commons Imaging to read EXIF from the original capture bytes
             org.apache.commons.imaging.formats.jpeg.JpegImageMetadata jpegMetadata =
-                (org.apache.commons.imaging.formats.jpeg.JpegImageMetadata) org.apache.commons.imaging.Imaging.getMetadata(
-                    sourceJpegWithExif
-                );
+                    (org.apache.commons.imaging.formats.jpeg.JpegImageMetadata) org.apache.commons.imaging.Imaging.getMetadata(
+                            sourceJpegWithExif
+                    );
             org.apache.commons.imaging.formats.tiff.TiffImageMetadata exif = jpegMetadata != null ? jpegMetadata.getExif() : null;
 
             org.apache.commons.imaging.formats.tiff.write.TiffOutputSet outputSet = exif != null
-                ? exif.getOutputSet()
-                : new org.apache.commons.imaging.formats.tiff.write.TiffOutputSet();
+                    ? exif.getOutputSet()
+                    : new org.apache.commons.imaging.formats.tiff.write.TiffOutputSet();
 
             // Update orientation if requested (normalize to 1)
             org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory rootDir = outputSet.getOrCreateRootDirectory();
@@ -1613,9 +1614,9 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
 
             java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
             new org.apache.commons.imaging.formats.jpeg.exif.ExifRewriter().updateExifMetadataLossless(
-                new java.io.ByteArrayInputStream(targetJpeg),
-                out,
-                outputSet
+                    new java.io.ByteArrayInputStream(targetJpeg),
+                    out,
+                    outputSet
             );
             return out.toByteArray();
         } catch (Throwable t) {
@@ -1625,56 +1626,56 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
     }
 
     private void updateResizedDimensions(
-        org.apache.commons.imaging.formats.tiff.write.TiffOutputSet outputSet,
-        Integer finalWidth,
-        Integer finalHeight
+            org.apache.commons.imaging.formats.tiff.write.TiffOutputSet outputSet,
+            Integer finalWidth,
+            Integer finalHeight
     ) throws org.apache.commons.imaging.ImagingException {
         org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory rootDir = outputSet.getOrCreateRootDirectory();
         if (finalWidth != null) {
             replaceShortOrLongTag(
-                rootDir,
-                org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants.TIFF_TAG_IMAGE_WIDTH,
-                finalWidth
+                    rootDir,
+                    org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants.TIFF_TAG_IMAGE_WIDTH,
+                    finalWidth
             );
         }
         if (finalHeight != null) {
             replaceShortOrLongTag(
-                rootDir,
-                org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants.TIFF_TAG_IMAGE_LENGTH,
-                finalHeight
+                    rootDir,
+                    org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants.TIFF_TAG_IMAGE_LENGTH,
+                    finalHeight
             );
         }
 
         org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory exifDir = outputSet.getOrCreateExifDirectory();
         if (finalWidth != null) {
             replaceShortTag(
-                exifDir,
-                org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants.EXIF_TAG_EXIF_IMAGE_WIDTH,
-                finalWidth
+                    exifDir,
+                    org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants.EXIF_TAG_EXIF_IMAGE_WIDTH,
+                    finalWidth
             );
         }
         if (finalHeight != null) {
             replaceShortTag(
-                exifDir,
-                org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants.EXIF_TAG_EXIF_IMAGE_LENGTH,
-                finalHeight
+                    exifDir,
+                    org.apache.commons.imaging.formats.tiff.constants.ExifTagConstants.EXIF_TAG_EXIF_IMAGE_LENGTH,
+                    finalHeight
             );
         }
     }
 
     private void replaceShortOrLongTag(
-        org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory directory,
-        org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShortOrLong tagInfo,
-        int value
+            org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory directory,
+            org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShortOrLong tagInfo,
+            int value
     ) throws org.apache.commons.imaging.ImagingException {
         directory.removeField(tagInfo);
         directory.add(tagInfo, value);
     }
 
     private void replaceShortTag(
-        org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory directory,
-        org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort tagInfo,
-        int value
+            org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory directory,
+            org.apache.commons.imaging.formats.tiff.taginfos.TagInfoShort tagInfo,
+            int value
     ) throws org.apache.commons.imaging.ImagingException {
         int sanitizedValue = Math.max(0, Math.min(value, 0xFFFF));
         directory.removeField(tagInfo);
@@ -1682,147 +1683,147 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
     }
 
     private static final String[][] EXIF_TAGS = new String[][] {
-        { ExifInterface.TAG_APERTURE_VALUE, "ApertureValue" },
-        { ExifInterface.TAG_ARTIST, "Artist" },
-        { ExifInterface.TAG_BITS_PER_SAMPLE, "BitsPerSample" },
-        { ExifInterface.TAG_BRIGHTNESS_VALUE, "BrightnessValue" },
-        { ExifInterface.TAG_CFA_PATTERN, "CFAPattern" },
-        { ExifInterface.TAG_COLOR_SPACE, "ColorSpace" },
-        { ExifInterface.TAG_COMPONENTS_CONFIGURATION, "ComponentsConfiguration" },
-        { ExifInterface.TAG_COMPRESSED_BITS_PER_PIXEL, "CompressedBitsPerPixel" },
-        { ExifInterface.TAG_COMPRESSION, "Compression" },
-        { ExifInterface.TAG_CONTRAST, "Contrast" },
-        { ExifInterface.TAG_COPYRIGHT, "Copyright" },
-        { ExifInterface.TAG_CUSTOM_RENDERED, "CustomRendered" },
-        { ExifInterface.TAG_DATETIME, "DateTime" },
-        { ExifInterface.TAG_DATETIME_DIGITIZED, "DateTimeDigitized" },
-        { ExifInterface.TAG_DATETIME_ORIGINAL, "DateTimeOriginal" },
-        { ExifInterface.TAG_DEVICE_SETTING_DESCRIPTION, "DeviceSettingDescription" },
-        { ExifInterface.TAG_DIGITAL_ZOOM_RATIO, "DigitalZoomRatio" },
-        { ExifInterface.TAG_DNG_VERSION, "DNGVersion" },
-        { ExifInterface.TAG_EXIF_VERSION, "ExifVersion" },
-        { ExifInterface.TAG_EXPOSURE_BIAS_VALUE, "ExposureBiasValue" },
-        { ExifInterface.TAG_EXPOSURE_INDEX, "ExposureIndex" },
-        { ExifInterface.TAG_EXPOSURE_MODE, "ExposureMode" },
-        { ExifInterface.TAG_EXPOSURE_PROGRAM, "ExposureProgram" },
-        { ExifInterface.TAG_EXPOSURE_TIME, "ExposureTime" },
-        { ExifInterface.TAG_FILE_SOURCE, "FileSource" },
-        { ExifInterface.TAG_FLASH, "Flash" },
-        { ExifInterface.TAG_FLASHPIX_VERSION, "FlashpixVersion" },
-        { ExifInterface.TAG_FLASH_ENERGY, "FlashEnergy" },
-        { ExifInterface.TAG_FOCAL_LENGTH, "FocalLength" },
-        { ExifInterface.TAG_FOCAL_LENGTH_IN_35MM_FILM, "FocalLengthIn35mmFilm" },
-        { ExifInterface.TAG_FOCAL_PLANE_RESOLUTION_UNIT, "FocalPlaneResolutionUnit" },
-        { ExifInterface.TAG_FOCAL_PLANE_X_RESOLUTION, "FocalPlaneXResolution" },
-        { ExifInterface.TAG_FOCAL_PLANE_Y_RESOLUTION, "FocalPlaneYResolution" },
-        { ExifInterface.TAG_F_NUMBER, "FNumber" },
-        { ExifInterface.TAG_GAIN_CONTROL, "GainControl" },
-        { ExifInterface.TAG_GPS_ALTITUDE, "GPSAltitude" },
-        { ExifInterface.TAG_GPS_ALTITUDE_REF, "GPSAltitudeRef" },
-        { ExifInterface.TAG_GPS_AREA_INFORMATION, "GPSAreaInformation" },
-        { ExifInterface.TAG_GPS_DATESTAMP, "GPSDateStamp" },
-        { ExifInterface.TAG_GPS_DEST_BEARING, "GPSDestBearing" },
-        { ExifInterface.TAG_GPS_DEST_BEARING_REF, "GPSDestBearingRef" },
-        { ExifInterface.TAG_GPS_DEST_DISTANCE, "GPSDestDistance" },
-        { ExifInterface.TAG_GPS_DEST_DISTANCE_REF, "GPSDestDistanceRef" },
-        { ExifInterface.TAG_GPS_DEST_LATITUDE, "GPSDestLatitude" },
-        { ExifInterface.TAG_GPS_DEST_LATITUDE_REF, "GPSDestLatitudeRef" },
-        { ExifInterface.TAG_GPS_DEST_LONGITUDE, "GPSDestLongitude" },
-        { ExifInterface.TAG_GPS_DEST_LONGITUDE_REF, "GPSDestLongitudeRef" },
-        { ExifInterface.TAG_GPS_DIFFERENTIAL, "GPSDifferential" },
-        { ExifInterface.TAG_GPS_DOP, "GPSDOP" },
-        { ExifInterface.TAG_GPS_IMG_DIRECTION, "GPSImgDirection" },
-        { ExifInterface.TAG_GPS_IMG_DIRECTION_REF, "GPSImgDirectionRef" },
-        { ExifInterface.TAG_GPS_LATITUDE, "GPSLatitude" },
-        { ExifInterface.TAG_GPS_LATITUDE_REF, "GPSLatitudeRef" },
-        { ExifInterface.TAG_GPS_LONGITUDE, "GPSLongitude" },
-        { ExifInterface.TAG_GPS_LONGITUDE_REF, "GPSLongitudeRef" },
-        { ExifInterface.TAG_GPS_MAP_DATUM, "GPSMapDatum" },
-        { ExifInterface.TAG_GPS_MEASURE_MODE, "GPSMeasureMode" },
-        { ExifInterface.TAG_GPS_PROCESSING_METHOD, "GPSProcessingMethod" },
-        { ExifInterface.TAG_GPS_SATELLITES, "GPSSatellites" },
-        { ExifInterface.TAG_GPS_SPEED, "GPSSpeed" },
-        { ExifInterface.TAG_GPS_SPEED_REF, "GPSSpeedRef" },
-        { ExifInterface.TAG_GPS_STATUS, "GPSStatus" },
-        { ExifInterface.TAG_GPS_TIMESTAMP, "GPSTimeStamp" },
-        { ExifInterface.TAG_GPS_TRACK, "GPSTrack" },
-        { ExifInterface.TAG_GPS_TRACK_REF, "GPSTrackRef" },
-        { ExifInterface.TAG_GPS_VERSION_ID, "GPSVersionID" },
-        { ExifInterface.TAG_IMAGE_DESCRIPTION, "ImageDescription" },
-        { ExifInterface.TAG_IMAGE_LENGTH, "ImageLength" },
-        { ExifInterface.TAG_IMAGE_UNIQUE_ID, "ImageUniqueID" },
-        { ExifInterface.TAG_IMAGE_WIDTH, "ImageWidth" },
-        { ExifInterface.TAG_INTEROPERABILITY_INDEX, "InteroperabilityIndex" },
-        { ExifInterface.TAG_ISO_SPEED, "ISOSpeed" },
-        { ExifInterface.TAG_ISO_SPEED_LATITUDE_YYY, "ISOSpeedLatitudeyyy" },
-        { ExifInterface.TAG_ISO_SPEED_LATITUDE_ZZZ, "ISOSpeedLatitudezzz" },
-        { ExifInterface.TAG_JPEG_INTERCHANGE_FORMAT, "JPEGInterchangeFormat" },
-        { ExifInterface.TAG_JPEG_INTERCHANGE_FORMAT_LENGTH, "JPEGInterchangeFormatLength" },
-        { ExifInterface.TAG_LIGHT_SOURCE, "LightSource" },
-        { ExifInterface.TAG_MAKE, "Make" },
-        { ExifInterface.TAG_MAKER_NOTE, "MakerNote" },
-        { ExifInterface.TAG_MAX_APERTURE_VALUE, "MaxApertureValue" },
-        { ExifInterface.TAG_METERING_MODE, "MeteringMode" },
-        { ExifInterface.TAG_MODEL, "Model" },
-        { ExifInterface.TAG_NEW_SUBFILE_TYPE, "NewSubfileType" },
-        { ExifInterface.TAG_OECF, "OECF" },
-        { ExifInterface.TAG_OFFSET_TIME, "OffsetTime" },
-        { ExifInterface.TAG_OFFSET_TIME_DIGITIZED, "OffsetTimeDigitized" },
-        { ExifInterface.TAG_OFFSET_TIME_ORIGINAL, "OffsetTimeOriginal" },
-        { ExifInterface.TAG_ORF_ASPECT_FRAME, "ORFAspectFrame" },
-        { ExifInterface.TAG_ORF_PREVIEW_IMAGE_LENGTH, "ORFPreviewImageLength" },
-        { ExifInterface.TAG_ORF_PREVIEW_IMAGE_START, "ORFPreviewImageStart" },
-        { ExifInterface.TAG_ORF_THUMBNAIL_IMAGE, "ORFThumbnailImage" },
-        { ExifInterface.TAG_ORIENTATION, "Orientation" },
-        { ExifInterface.TAG_PHOTOMETRIC_INTERPRETATION, "PhotometricInterpretation" },
-        { ExifInterface.TAG_PIXEL_X_DIMENSION, "PixelXDimension" },
-        { ExifInterface.TAG_PIXEL_Y_DIMENSION, "PixelYDimension" },
-        { ExifInterface.TAG_PLANAR_CONFIGURATION, "PlanarConfiguration" },
-        { ExifInterface.TAG_PRIMARY_CHROMATICITIES, "PrimaryChromaticities" },
-        { ExifInterface.TAG_RECOMMENDED_EXPOSURE_INDEX, "RecommendedExposureIndex" },
-        { ExifInterface.TAG_REFERENCE_BLACK_WHITE, "ReferenceBlackWhite" },
-        { ExifInterface.TAG_RELATED_SOUND_FILE, "RelatedSoundFile" },
-        { ExifInterface.TAG_RESOLUTION_UNIT, "ResolutionUnit" },
-        { ExifInterface.TAG_ROWS_PER_STRIP, "RowsPerStrip" },
-        { ExifInterface.TAG_RW2_ISO, "RW2ISO" },
-        { ExifInterface.TAG_RW2_JPG_FROM_RAW, "RW2JpgFromRaw" },
-        { ExifInterface.TAG_RW2_SENSOR_BOTTOM_BORDER, "RW2SensorBottomBorder" },
-        { ExifInterface.TAG_RW2_SENSOR_LEFT_BORDER, "RW2SensorLeftBorder" },
-        { ExifInterface.TAG_RW2_SENSOR_RIGHT_BORDER, "RW2SensorRightBorder" },
-        { ExifInterface.TAG_RW2_SENSOR_TOP_BORDER, "RW2SensorTopBorder" },
-        { ExifInterface.TAG_SAMPLES_PER_PIXEL, "SamplesPerPixel" },
-        { ExifInterface.TAG_SATURATION, "Saturation" },
-        { ExifInterface.TAG_SCENE_CAPTURE_TYPE, "SceneCaptureType" },
-        { ExifInterface.TAG_SCENE_TYPE, "SceneType" },
-        { ExifInterface.TAG_SENSING_METHOD, "SensingMethod" },
-        { ExifInterface.TAG_SENSITIVITY_TYPE, "SensitivityType" },
-        { ExifInterface.TAG_SHARPNESS, "Sharpness" },
-        { ExifInterface.TAG_SHUTTER_SPEED_VALUE, "ShutterSpeedValue" },
-        { ExifInterface.TAG_SOFTWARE, "Software" },
-        { ExifInterface.TAG_SPATIAL_FREQUENCY_RESPONSE, "SpatialFrequencyResponse" },
-        { ExifInterface.TAG_SPECTRAL_SENSITIVITY, "SpectralSensitivity" },
-        { ExifInterface.TAG_STANDARD_OUTPUT_SENSITIVITY, "StandardOutputSensitivity" },
-        { ExifInterface.TAG_STRIP_BYTE_COUNTS, "StripByteCounts" },
-        { ExifInterface.TAG_STRIP_OFFSETS, "StripOffsets" },
-        { ExifInterface.TAG_SUBFILE_TYPE, "SubfileType" },
-        { ExifInterface.TAG_SUBJECT_AREA, "SubjectArea" },
-        { ExifInterface.TAG_SUBJECT_DISTANCE, "SubjectDistance" },
-        { ExifInterface.TAG_SUBJECT_DISTANCE_RANGE, "SubjectDistanceRange" },
-        { ExifInterface.TAG_SUBJECT_LOCATION, "SubjectLocation" },
-        { ExifInterface.TAG_SUBSEC_TIME, "SubSecTime" },
-        { ExifInterface.TAG_SUBSEC_TIME_DIGITIZED, "SubSecTimeDigitized" },
-        { ExifInterface.TAG_SUBSEC_TIME_ORIGINAL, "SubSecTimeOriginal" },
-        { ExifInterface.TAG_THUMBNAIL_IMAGE_LENGTH, "ThumbnailImageLength" },
-        { ExifInterface.TAG_THUMBNAIL_IMAGE_WIDTH, "ThumbnailImageWidth" },
-        { ExifInterface.TAG_TRANSFER_FUNCTION, "TransferFunction" },
-        { ExifInterface.TAG_USER_COMMENT, "UserComment" },
-        { ExifInterface.TAG_WHITE_BALANCE, "WhiteBalance" },
-        { ExifInterface.TAG_WHITE_POINT, "WhitePoint" },
-        { ExifInterface.TAG_X_RESOLUTION, "XResolution" },
-        { ExifInterface.TAG_Y_CB_CR_COEFFICIENTS, "YCbCrCoefficients" },
-        { ExifInterface.TAG_Y_CB_CR_POSITIONING, "YCbCrPositioning" },
-        { ExifInterface.TAG_Y_CB_CR_SUB_SAMPLING, "YCbCrSubSampling" },
-        { ExifInterface.TAG_Y_RESOLUTION, "YResolution" }
+            { ExifInterface.TAG_APERTURE_VALUE, "ApertureValue" },
+            { ExifInterface.TAG_ARTIST, "Artist" },
+            { ExifInterface.TAG_BITS_PER_SAMPLE, "BitsPerSample" },
+            { ExifInterface.TAG_BRIGHTNESS_VALUE, "BrightnessValue" },
+            { ExifInterface.TAG_CFA_PATTERN, "CFAPattern" },
+            { ExifInterface.TAG_COLOR_SPACE, "ColorSpace" },
+            { ExifInterface.TAG_COMPONENTS_CONFIGURATION, "ComponentsConfiguration" },
+            { ExifInterface.TAG_COMPRESSED_BITS_PER_PIXEL, "CompressedBitsPerPixel" },
+            { ExifInterface.TAG_COMPRESSION, "Compression" },
+            { ExifInterface.TAG_CONTRAST, "Contrast" },
+            { ExifInterface.TAG_COPYRIGHT, "Copyright" },
+            { ExifInterface.TAG_CUSTOM_RENDERED, "CustomRendered" },
+            { ExifInterface.TAG_DATETIME, "DateTime" },
+            { ExifInterface.TAG_DATETIME_DIGITIZED, "DateTimeDigitized" },
+            { ExifInterface.TAG_DATETIME_ORIGINAL, "DateTimeOriginal" },
+            { ExifInterface.TAG_DEVICE_SETTING_DESCRIPTION, "DeviceSettingDescription" },
+            { ExifInterface.TAG_DIGITAL_ZOOM_RATIO, "DigitalZoomRatio" },
+            { ExifInterface.TAG_DNG_VERSION, "DNGVersion" },
+            { ExifInterface.TAG_EXIF_VERSION, "ExifVersion" },
+            { ExifInterface.TAG_EXPOSURE_BIAS_VALUE, "ExposureBiasValue" },
+            { ExifInterface.TAG_EXPOSURE_INDEX, "ExposureIndex" },
+            { ExifInterface.TAG_EXPOSURE_MODE, "ExposureMode" },
+            { ExifInterface.TAG_EXPOSURE_PROGRAM, "ExposureProgram" },
+            { ExifInterface.TAG_EXPOSURE_TIME, "ExposureTime" },
+            { ExifInterface.TAG_FILE_SOURCE, "FileSource" },
+            { ExifInterface.TAG_FLASH, "Flash" },
+            { ExifInterface.TAG_FLASHPIX_VERSION, "FlashpixVersion" },
+            { ExifInterface.TAG_FLASH_ENERGY, "FlashEnergy" },
+            { ExifInterface.TAG_FOCAL_LENGTH, "FocalLength" },
+            { ExifInterface.TAG_FOCAL_LENGTH_IN_35MM_FILM, "FocalLengthIn35mmFilm" },
+            { ExifInterface.TAG_FOCAL_PLANE_RESOLUTION_UNIT, "FocalPlaneResolutionUnit" },
+            { ExifInterface.TAG_FOCAL_PLANE_X_RESOLUTION, "FocalPlaneXResolution" },
+            { ExifInterface.TAG_FOCAL_PLANE_Y_RESOLUTION, "FocalPlaneYResolution" },
+            { ExifInterface.TAG_F_NUMBER, "FNumber" },
+            { ExifInterface.TAG_GAIN_CONTROL, "GainControl" },
+            { ExifInterface.TAG_GPS_ALTITUDE, "GPSAltitude" },
+            { ExifInterface.TAG_GPS_ALTITUDE_REF, "GPSAltitudeRef" },
+            { ExifInterface.TAG_GPS_AREA_INFORMATION, "GPSAreaInformation" },
+            { ExifInterface.TAG_GPS_DATESTAMP, "GPSDateStamp" },
+            { ExifInterface.TAG_GPS_DEST_BEARING, "GPSDestBearing" },
+            { ExifInterface.TAG_GPS_DEST_BEARING_REF, "GPSDestBearingRef" },
+            { ExifInterface.TAG_GPS_DEST_DISTANCE, "GPSDestDistance" },
+            { ExifInterface.TAG_GPS_DEST_DISTANCE_REF, "GPSDestDistanceRef" },
+            { ExifInterface.TAG_GPS_DEST_LATITUDE, "GPSDestLatitude" },
+            { ExifInterface.TAG_GPS_DEST_LATITUDE_REF, "GPSDestLatitudeRef" },
+            { ExifInterface.TAG_GPS_DEST_LONGITUDE, "GPSDestLongitude" },
+            { ExifInterface.TAG_GPS_DEST_LONGITUDE_REF, "GPSDestLongitudeRef" },
+            { ExifInterface.TAG_GPS_DIFFERENTIAL, "GPSDifferential" },
+            { ExifInterface.TAG_GPS_DOP, "GPSDOP" },
+            { ExifInterface.TAG_GPS_IMG_DIRECTION, "GPSImgDirection" },
+            { ExifInterface.TAG_GPS_IMG_DIRECTION_REF, "GPSImgDirectionRef" },
+            { ExifInterface.TAG_GPS_LATITUDE, "GPSLatitude" },
+            { ExifInterface.TAG_GPS_LATITUDE_REF, "GPSLatitudeRef" },
+            { ExifInterface.TAG_GPS_LONGITUDE, "GPSLongitude" },
+            { ExifInterface.TAG_GPS_LONGITUDE_REF, "GPSLongitudeRef" },
+            { ExifInterface.TAG_GPS_MAP_DATUM, "GPSMapDatum" },
+            { ExifInterface.TAG_GPS_MEASURE_MODE, "GPSMeasureMode" },
+            { ExifInterface.TAG_GPS_PROCESSING_METHOD, "GPSProcessingMethod" },
+            { ExifInterface.TAG_GPS_SATELLITES, "GPSSatellites" },
+            { ExifInterface.TAG_GPS_SPEED, "GPSSpeed" },
+            { ExifInterface.TAG_GPS_SPEED_REF, "GPSSpeedRef" },
+            { ExifInterface.TAG_GPS_STATUS, "GPSStatus" },
+            { ExifInterface.TAG_GPS_TIMESTAMP, "GPSTimeStamp" },
+            { ExifInterface.TAG_GPS_TRACK, "GPSTrack" },
+            { ExifInterface.TAG_GPS_TRACK_REF, "GPSTrackRef" },
+            { ExifInterface.TAG_GPS_VERSION_ID, "GPSVersionID" },
+            { ExifInterface.TAG_IMAGE_DESCRIPTION, "ImageDescription" },
+            { ExifInterface.TAG_IMAGE_LENGTH, "ImageLength" },
+            { ExifInterface.TAG_IMAGE_UNIQUE_ID, "ImageUniqueID" },
+            { ExifInterface.TAG_IMAGE_WIDTH, "ImageWidth" },
+            { ExifInterface.TAG_INTEROPERABILITY_INDEX, "InteroperabilityIndex" },
+            { ExifInterface.TAG_ISO_SPEED, "ISOSpeed" },
+            { ExifInterface.TAG_ISO_SPEED_LATITUDE_YYY, "ISOSpeedLatitudeyyy" },
+            { ExifInterface.TAG_ISO_SPEED_LATITUDE_ZZZ, "ISOSpeedLatitudezzz" },
+            { ExifInterface.TAG_JPEG_INTERCHANGE_FORMAT, "JPEGInterchangeFormat" },
+            { ExifInterface.TAG_JPEG_INTERCHANGE_FORMAT_LENGTH, "JPEGInterchangeFormatLength" },
+            { ExifInterface.TAG_LIGHT_SOURCE, "LightSource" },
+            { ExifInterface.TAG_MAKE, "Make" },
+            { ExifInterface.TAG_MAKER_NOTE, "MakerNote" },
+            { ExifInterface.TAG_MAX_APERTURE_VALUE, "MaxApertureValue" },
+            { ExifInterface.TAG_METERING_MODE, "MeteringMode" },
+            { ExifInterface.TAG_MODEL, "Model" },
+            { ExifInterface.TAG_NEW_SUBFILE_TYPE, "NewSubfileType" },
+            { ExifInterface.TAG_OECF, "OECF" },
+            { ExifInterface.TAG_OFFSET_TIME, "OffsetTime" },
+            { ExifInterface.TAG_OFFSET_TIME_DIGITIZED, "OffsetTimeDigitized" },
+            { ExifInterface.TAG_OFFSET_TIME_ORIGINAL, "OffsetTimeOriginal" },
+            { ExifInterface.TAG_ORF_ASPECT_FRAME, "ORFAspectFrame" },
+            { ExifInterface.TAG_ORF_PREVIEW_IMAGE_LENGTH, "ORFPreviewImageLength" },
+            { ExifInterface.TAG_ORF_PREVIEW_IMAGE_START, "ORFPreviewImageStart" },
+            { ExifInterface.TAG_ORF_THUMBNAIL_IMAGE, "ORFThumbnailImage" },
+            { ExifInterface.TAG_ORIENTATION, "Orientation" },
+            { ExifInterface.TAG_PHOTOMETRIC_INTERPRETATION, "PhotometricInterpretation" },
+            { ExifInterface.TAG_PIXEL_X_DIMENSION, "PixelXDimension" },
+            { ExifInterface.TAG_PIXEL_Y_DIMENSION, "PixelYDimension" },
+            { ExifInterface.TAG_PLANAR_CONFIGURATION, "PlanarConfiguration" },
+            { ExifInterface.TAG_PRIMARY_CHROMATICITIES, "PrimaryChromaticities" },
+            { ExifInterface.TAG_RECOMMENDED_EXPOSURE_INDEX, "RecommendedExposureIndex" },
+            { ExifInterface.TAG_REFERENCE_BLACK_WHITE, "ReferenceBlackWhite" },
+            { ExifInterface.TAG_RELATED_SOUND_FILE, "RelatedSoundFile" },
+            { ExifInterface.TAG_RESOLUTION_UNIT, "ResolutionUnit" },
+            { ExifInterface.TAG_ROWS_PER_STRIP, "RowsPerStrip" },
+            { ExifInterface.TAG_RW2_ISO, "RW2ISO" },
+            { ExifInterface.TAG_RW2_JPG_FROM_RAW, "RW2JpgFromRaw" },
+            { ExifInterface.TAG_RW2_SENSOR_BOTTOM_BORDER, "RW2SensorBottomBorder" },
+            { ExifInterface.TAG_RW2_SENSOR_LEFT_BORDER, "RW2SensorLeftBorder" },
+            { ExifInterface.TAG_RW2_SENSOR_RIGHT_BORDER, "RW2SensorRightBorder" },
+            { ExifInterface.TAG_RW2_SENSOR_TOP_BORDER, "RW2SensorTopBorder" },
+            { ExifInterface.TAG_SAMPLES_PER_PIXEL, "SamplesPerPixel" },
+            { ExifInterface.TAG_SATURATION, "Saturation" },
+            { ExifInterface.TAG_SCENE_CAPTURE_TYPE, "SceneCaptureType" },
+            { ExifInterface.TAG_SCENE_TYPE, "SceneType" },
+            { ExifInterface.TAG_SENSING_METHOD, "SensingMethod" },
+            { ExifInterface.TAG_SENSITIVITY_TYPE, "SensitivityType" },
+            { ExifInterface.TAG_SHARPNESS, "Sharpness" },
+            { ExifInterface.TAG_SHUTTER_SPEED_VALUE, "ShutterSpeedValue" },
+            { ExifInterface.TAG_SOFTWARE, "Software" },
+            { ExifInterface.TAG_SPATIAL_FREQUENCY_RESPONSE, "SpatialFrequencyResponse" },
+            { ExifInterface.TAG_SPECTRAL_SENSITIVITY, "SpectralSensitivity" },
+            { ExifInterface.TAG_STANDARD_OUTPUT_SENSITIVITY, "StandardOutputSensitivity" },
+            { ExifInterface.TAG_STRIP_BYTE_COUNTS, "StripByteCounts" },
+            { ExifInterface.TAG_STRIP_OFFSETS, "StripOffsets" },
+            { ExifInterface.TAG_SUBFILE_TYPE, "SubfileType" },
+            { ExifInterface.TAG_SUBJECT_AREA, "SubjectArea" },
+            { ExifInterface.TAG_SUBJECT_DISTANCE, "SubjectDistance" },
+            { ExifInterface.TAG_SUBJECT_DISTANCE_RANGE, "SubjectDistanceRange" },
+            { ExifInterface.TAG_SUBJECT_LOCATION, "SubjectLocation" },
+            { ExifInterface.TAG_SUBSEC_TIME, "SubSecTime" },
+            { ExifInterface.TAG_SUBSEC_TIME_DIGITIZED, "SubSecTimeDigitized" },
+            { ExifInterface.TAG_SUBSEC_TIME_ORIGINAL, "SubSecTimeOriginal" },
+            { ExifInterface.TAG_THUMBNAIL_IMAGE_LENGTH, "ThumbnailImageLength" },
+            { ExifInterface.TAG_THUMBNAIL_IMAGE_WIDTH, "ThumbnailImageWidth" },
+            { ExifInterface.TAG_TRANSFER_FUNCTION, "TransferFunction" },
+            { ExifInterface.TAG_USER_COMMENT, "UserComment" },
+            { ExifInterface.TAG_WHITE_BALANCE, "WhiteBalance" },
+            { ExifInterface.TAG_WHITE_POINT, "WhitePoint" },
+            { ExifInterface.TAG_X_RESOLUTION, "XResolution" },
+            { ExifInterface.TAG_Y_CB_CR_COEFFICIENTS, "YCbCrCoefficients" },
+            { ExifInterface.TAG_Y_CB_CR_POSITIONING, "YCbCrPositioning" },
+            { ExifInterface.TAG_Y_CB_CR_SUB_SAMPLING, "YCbCrSubSampling" },
+            { ExifInterface.TAG_Y_RESOLUTION, "YResolution" }
     };
 
     // Note: We avoid temporary files for EXIF writes. When we transform pixels (resize/crop),
@@ -1845,39 +1846,39 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
         boolean dispatched = false;
         try {
             sampleImageCapture.takePicture(
-                cameraExecutor,
-                new ImageCapture.OnImageCapturedCallback() {
-                    @Override
-                    public void onError(@NonNull ImageCaptureException exception) {
-                        Log.e(TAG, "captureSample: Sample capture failed", exception);
-                        if (listener != null) {
-                            listener.onSampleTakenError("Sample capture failed: " + exception.getMessage());
-                        }
-                        endOperation("captureSample");
-                    }
-
-                    @Override
-                    public void onCaptureSuccess(@NonNull ImageProxy image) {
-                        //noinspection TryFinallyCanBeTryWithResources
-                        try {
-                            // Convert ImageProxy to byte array
-                            byte[] bytes = imageProxyToByteArray(image);
-                            String base64 = Base64.encodeToString(bytes, Base64.NO_WRAP);
-
+                    cameraExecutor,
+                    new ImageCapture.OnImageCapturedCallback() {
+                        @Override
+                        public void onError(@NonNull ImageCaptureException exception) {
+                            Log.e(TAG, "captureSample: Sample capture failed", exception);
                             if (listener != null) {
-                                listener.onSampleTaken(base64);
+                                listener.onSampleTakenError("Sample capture failed: " + exception.getMessage());
                             }
-                        } catch (Exception e) {
-                            Log.e(TAG, "captureSample: Error processing sample", e);
-                            if (listener != null) {
-                                listener.onSampleTakenError("Error processing sample: " + e.getMessage());
-                            }
-                        } finally {
-                            image.close();
                             endOperation("captureSample");
                         }
+
+                        @Override
+                        public void onCaptureSuccess(@NonNull ImageProxy image) {
+                            //noinspection TryFinallyCanBeTryWithResources
+                            try {
+                                // Convert ImageProxy to byte array
+                                byte[] bytes = imageProxyToByteArray(image);
+                                String base64 = Base64.encodeToString(bytes, Base64.NO_WRAP);
+
+                                if (listener != null) {
+                                    listener.onSampleTaken(base64);
+                                }
+                            } catch (Exception e) {
+                                Log.e(TAG, "captureSample: Error processing sample", e);
+                                if (listener != null) {
+                                    listener.onSampleTakenError("Error processing sample: " + e.getMessage());
+                                }
+                            } finally {
+                                image.close();
+                                endOperation("captureSample");
+                            }
+                        }
                     }
-                }
             );
 
             dispatched = true;
@@ -2010,15 +2011,15 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                 String label = "Logical " + deviceType + " (" + position + ")";
 
                 devices.add(
-                    new app.capgo.capacitor.camera.preview.model.CameraDevice(
-                        logicalCameraId,
-                        label,
-                        position,
-                        logicalLenses,
-                        minZoom,
-                        maxZoom,
-                        true
-                    )
+                        new app.capgo.capacitor.camera.preview.model.CameraDevice(
+                                logicalCameraId,
+                                label,
+                                position,
+                                logicalLenses,
+                                minZoom,
+                                maxZoom,
+                                true
+                        )
                 );
                 Log.d(TAG, "Added logical camera: " + logicalCameraId + " zoom: " + minZoom + "-" + maxZoom);
 
@@ -2061,8 +2062,8 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
 
                             Log.d(TAG, "  Focal lengths: " + (focalLengths != null ? Arrays.toString(focalLengths) : "null"));
                             Log.d(
-                                TAG,
-                                "  Sensor size: " + (sensorSize != null ? sensorSize.getWidth() + "x" + sensorSize.getHeight() : "null")
+                                    TAG,
+                                    "  Sensor size: " + (sensorSize != null ? sensorSize.getWidth() + "x" + sensorSize.getHeight() : "null")
                             );
 
                             if (focalLengths != null && focalLengths.length > 0 && sensorSize != null && sensorSize.getWidth() > 0) {
@@ -2090,15 +2091,15 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                             physicalLenses.add(new LensInfo(physicalFocalLength, physicalDeviceType, 1.0f, physicalMaxZoom));
 
                             devices.add(
-                                new app.capgo.capacitor.camera.preview.model.CameraDevice(
-                                    physicalId,
-                                    physicalLabel,
-                                    position,
-                                    physicalLenses,
-                                    physicalMinZoom,
-                                    physicalMaxZoom,
-                                    false
-                                )
+                                    new app.capgo.capacitor.camera.preview.model.CameraDevice(
+                                            physicalId,
+                                            physicalLabel,
+                                            position,
+                                            physicalLenses,
+                                            physicalMinZoom,
+                                            physicalMaxZoom,
+                                            false
+                                    )
                             );
                             Log.d(TAG, "Added physical camera: " + physicalId + " (" + physicalDeviceType + ")");
                         } catch (CameraAccessException e) {
@@ -2253,8 +2254,8 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
 
         // Create focus and metering action (persistent, no auto-cancel) to match iOS behavior
         FocusMeteringAction action = new FocusMeteringAction.Builder(point, FocusMeteringAction.FLAG_AF | FocusMeteringAction.FLAG_AE)
-            .disableAutoCancel()
-            .build();
+                .disableAutoCancel()
+                .build();
 
         if (IsOperationRunning("setFocus")) {
             Log.d(TAG, "setFocus: Ignored because stop is pending");
@@ -2281,30 +2282,30 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
             final ListenableFuture<FocusMeteringResult> capturedFuture = future;
             final long tokenForListener = indicatorToken;
             future.addListener(
-                () -> {
-                    try {
-                        FocusMeteringResult result = capturedFuture.get();
-                    } catch (Exception e) {
-                        // Handle cancellation gracefully - this is expected when rapid taps occur
-                        if (
-                            e.getMessage() != null &&
-                            (e.getMessage().contains("Cancelled by another startFocusAndMetering") ||
-                                e.getMessage().contains("OperationCanceledException") ||
-                                e.getClass().getSimpleName().contains("OperationCanceledException"))
-                        ) {
-                            Log.d(TAG, "Focus operation was cancelled by a newer focus request");
-                        } else {
-                            Log.e(TAG, "Error during focus: " + e.getMessage());
+                    () -> {
+                        try {
+                            FocusMeteringResult result = capturedFuture.get();
+                        } catch (Exception e) {
+                            // Handle cancellation gracefully - this is expected when rapid taps occur
+                            if (
+                                    e.getMessage() != null &&
+                                            (e.getMessage().contains("Cancelled by another startFocusAndMetering") ||
+                                                    e.getMessage().contains("OperationCanceledException") ||
+                                                    e.getClass().getSimpleName().contains("OperationCanceledException"))
+                            ) {
+                                Log.d(TAG, "Focus operation was cancelled by a newer focus request");
+                            } else {
+                                Log.e(TAG, "Error during focus: " + e.getMessage());
+                            }
+                        } finally {
+                            if (currentFocusFuture == capturedFuture && currentFocusFuture.isDone()) {
+                                currentFocusFuture = null;
+                            }
+                            hideFocusIndicator(tokenForListener);
+                            endOperation("setFocus");
                         }
-                    } finally {
-                        if (currentFocusFuture == capturedFuture && currentFocusFuture.isDone()) {
-                            currentFocusFuture = null;
-                        }
-                        hideFocusIndicator(tokenForListener);
-                        endOperation("setFocus");
-                    }
-                },
-                ContextCompat.getMainExecutor(context)
+                    },
+                    ContextCompat.getMainExecutor(context)
             );
         } catch (Exception e) {
             currentFocusFuture = null;
@@ -2344,18 +2345,18 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
         switch (normalized) {
             case "LOCK": {
                 CaptureRequestOptions opts = new CaptureRequestOptions.Builder()
-                    .setCaptureRequestOption(CaptureRequest.CONTROL_AE_LOCK, true)
-                    .setCaptureRequestOption(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
-                    .build();
+                        .setCaptureRequestOption(CaptureRequest.CONTROL_AE_LOCK, true)
+                        .setCaptureRequestOption(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
+                        .build();
                 mainExecutor.execute(() -> c2.setCaptureRequestOptions(opts));
                 currentExposureMode = "LOCK";
                 break;
             }
             case "CONTINUOUS": {
                 CaptureRequestOptions opts = new CaptureRequestOptions.Builder()
-                    .setCaptureRequestOption(CaptureRequest.CONTROL_AE_LOCK, false)
-                    .setCaptureRequestOption(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
-                    .build();
+                        .setCaptureRequestOption(CaptureRequest.CONTROL_AE_LOCK, false)
+                        .setCaptureRequestOption(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
+                        .build();
                 mainExecutor.execute(() -> c2.setCaptureRequestOptions(opts));
                 currentExposureMode = "CONTINUOUS";
                 break;
@@ -2734,25 +2735,25 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
 
                     // Update sessionConfig with the new device ID
                     sessionConfig = new CameraSessionConfiguration(
-                        deviceId,
-                        position,
-                        sessionConfig.getX(),
-                        sessionConfig.getY(),
-                        sessionConfig.getWidth(),
-                        sessionConfig.getHeight(),
-                        sessionConfig.getPaddingBottom(),
-                        sessionConfig.getToBack(),
-                        sessionConfig.getStoreToFile(),
-                        sessionConfig.getEnableOpacity(),
-                        sessionConfig.getDisableExifHeaderStripping(),
-                        sessionConfig.getDisableAudio(),
-                        sessionConfig.getZoomFactor(),
-                        sessionConfig.getAspectRatio(),
-                        sessionConfig.getAspectMode(),
-                        sessionConfig.getGridMode(),
-                        sessionConfig.getDisableFocusIndicator(),
-                        sessionConfig.isVideoModeEnabled(),
-                        sessionConfig.getVideoQuality()
+                            deviceId,
+                            position,
+                            sessionConfig.getX(),
+                            sessionConfig.getY(),
+                            sessionConfig.getWidth(),
+                            sessionConfig.getHeight(),
+                            sessionConfig.getPaddingBottom(),
+                            sessionConfig.getToBack(),
+                            sessionConfig.getStoreToFile(),
+                            sessionConfig.getEnableOpacity(),
+                            sessionConfig.getDisableExifHeaderStripping(),
+                            sessionConfig.getDisableAudio(),
+                            sessionConfig.getZoomFactor(),
+                            sessionConfig.getAspectRatio(),
+                            sessionConfig.getAspectMode(),
+                            sessionConfig.getGridMode(),
+                            sessionConfig.getDisableFocusIndicator(),
+                            sessionConfig.isVideoModeEnabled(),
+                            sessionConfig.getVideoQuality()
                     );
 
                     sessionConfig.setCentered(wasCentered);
@@ -2780,25 +2781,25 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
         Log.d(TAG, "flipCamera: Switching from " + currentPosition + " to " + newPosition);
 
         sessionConfig = new CameraSessionConfiguration(
-            null, // deviceId - clear device ID to force position-based selection
-            newPosition, // position
-            sessionConfig.getX(), // x
-            sessionConfig.getY(), // y
-            sessionConfig.getWidth(), // width
-            sessionConfig.getHeight(), // height
-            sessionConfig.getPaddingBottom(), // paddingBottom
-            sessionConfig.isToBack(), // toBack
-            sessionConfig.isStoreToFile(), // storeToFile
-            sessionConfig.isEnableOpacity(), // enableOpacity
-            sessionConfig.isDisableExifHeaderStripping(), // disableExifHeaderStripping
-            sessionConfig.isDisableAudio(), // disableAudio
-            sessionConfig.getZoomFactor(), // zoomFactor
-            sessionConfig.getAspectRatio(), // aspectRatio
-            sessionConfig.getAspectMode(), // aspectMode
-            sessionConfig.getGridMode(), // gridMode
-            sessionConfig.getDisableFocusIndicator(), // disableFocusIndicator
-            sessionConfig.isVideoModeEnabled(), // enableVideoMode
-            sessionConfig.getVideoQuality() // videoQuality
+                null, // deviceId - clear device ID to force position-based selection
+                newPosition, // position
+                sessionConfig.getX(), // x
+                sessionConfig.getY(), // y
+                sessionConfig.getWidth(), // width
+                sessionConfig.getHeight(), // height
+                sessionConfig.getPaddingBottom(), // paddingBottom
+                sessionConfig.isToBack(), // toBack
+                sessionConfig.isStoreToFile(), // storeToFile
+                sessionConfig.isEnableOpacity(), // enableOpacity
+                sessionConfig.isDisableExifHeaderStripping(), // disableExifHeaderStripping
+                sessionConfig.isDisableAudio(), // disableAudio
+                sessionConfig.getZoomFactor(), // zoomFactor
+                sessionConfig.getAspectRatio(), // aspectRatio
+                sessionConfig.getAspectMode(), // aspectMode
+                sessionConfig.getGridMode(), // gridMode
+                sessionConfig.getDisableFocusIndicator(), // disableFocusIndicator
+                sessionConfig.isVideoModeEnabled(), // enableVideoMode
+                sessionConfig.getVideoQuality() // videoQuality
         );
 
         sessionConfig.setCentered(wasCentered);
@@ -2900,25 +2901,25 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
 
         // Match iOS behavior: when aspect ratio changes, always auto-center
         sessionConfig = new CameraSessionConfiguration(
-            sessionConfig.getDeviceId(),
-            sessionConfig.getPosition(),
-            -1, // Force auto-center X (iOS: self.posX = -1)
-            -1, // Force auto-center Y (iOS: self.posY = -1)
-            sessionConfig.getWidth(),
-            sessionConfig.getHeight(),
-            sessionConfig.getPaddingBottom(),
-            sessionConfig.getToBack(),
-            sessionConfig.getStoreToFile(),
-            sessionConfig.getEnableOpacity(),
-            sessionConfig.getDisableExifHeaderStripping(),
-            sessionConfig.getDisableAudio(),
-            sessionConfig.getZoomFactor(),
-            aspectRatio,
-            sessionConfig.getAspectMode(),
-            currentGridMode,
-            sessionConfig.getDisableFocusIndicator(),
-            sessionConfig.isVideoModeEnabled(),
-            sessionConfig.getVideoQuality()
+                sessionConfig.getDeviceId(),
+                sessionConfig.getPosition(),
+                -1, // Force auto-center X (iOS: self.posX = -1)
+                -1, // Force auto-center Y (iOS: self.posY = -1)
+                sessionConfig.getWidth(),
+                sessionConfig.getHeight(),
+                sessionConfig.getPaddingBottom(),
+                sessionConfig.getToBack(),
+                sessionConfig.getStoreToFile(),
+                sessionConfig.getEnableOpacity(),
+                sessionConfig.getDisableExifHeaderStripping(),
+                sessionConfig.getDisableAudio(),
+                sessionConfig.getZoomFactor(),
+                aspectRatio,
+                sessionConfig.getAspectMode(),
+                currentGridMode,
+                sessionConfig.getDisableFocusIndicator(),
+                sessionConfig.isVideoModeEnabled(),
+                sessionConfig.getVideoQuality()
         );
         sessionConfig.setCentered(true);
 
@@ -2976,25 +2977,25 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
 
         // Match iOS behavior: when aspect ratio changes, always auto-center
         sessionConfig = new CameraSessionConfiguration(
-            sessionConfig.getDeviceId(),
-            sessionConfig.getPosition(),
-            -1, // Force auto-center X (iOS: self.posX = -1)
-            -1, // Force auto-center Y (iOS: self.posY = -1)
-            sessionConfig.getWidth(),
-            sessionConfig.getHeight(),
-            sessionConfig.getPaddingBottom(),
-            sessionConfig.getToBack(),
-            sessionConfig.getStoreToFile(),
-            sessionConfig.getEnableOpacity(),
-            sessionConfig.getDisableExifHeaderStripping(),
-            sessionConfig.getDisableAudio(),
-            sessionConfig.getZoomFactor(),
-            aspectRatio,
-            sessionConfig.getAspectMode(),
-            currentGridMode,
-            sessionConfig.getDisableFocusIndicator(),
-            sessionConfig.isVideoModeEnabled(),
-            sessionConfig.getVideoQuality()
+                sessionConfig.getDeviceId(),
+                sessionConfig.getPosition(),
+                -1, // Force auto-center X (iOS: self.posX = -1)
+                -1, // Force auto-center Y (iOS: self.posY = -1)
+                sessionConfig.getWidth(),
+                sessionConfig.getHeight(),
+                sessionConfig.getPaddingBottom(),
+                sessionConfig.getToBack(),
+                sessionConfig.getStoreToFile(),
+                sessionConfig.getEnableOpacity(),
+                sessionConfig.getDisableExifHeaderStripping(),
+                sessionConfig.getDisableAudio(),
+                sessionConfig.getZoomFactor(),
+                aspectRatio,
+                sessionConfig.getAspectMode(),
+                currentGridMode,
+                sessionConfig.getDisableFocusIndicator(),
+                sessionConfig.isVideoModeEnabled(),
+                sessionConfig.getVideoQuality()
         );
         sessionConfig.setCentered(true);
 
@@ -3039,25 +3040,25 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
         if (sessionConfig != null) {
             Log.d(TAG, "setGridMode: Changing grid mode to: " + gridMode);
             sessionConfig = new CameraSessionConfiguration(
-                sessionConfig.getDeviceId(),
-                sessionConfig.getPosition(),
-                sessionConfig.getX(),
-                sessionConfig.getY(),
-                sessionConfig.getWidth(),
-                sessionConfig.getHeight(),
-                sessionConfig.getPaddingBottom(),
-                sessionConfig.getToBack(),
-                sessionConfig.getStoreToFile(),
-                sessionConfig.getEnableOpacity(),
-                sessionConfig.getDisableExifHeaderStripping(),
-                sessionConfig.getDisableAudio(),
-                sessionConfig.getZoomFactor(),
-                sessionConfig.getAspectRatio(),
-                sessionConfig.getAspectMode(),
-                gridMode,
-                sessionConfig.getDisableFocusIndicator(),
-                sessionConfig.isVideoModeEnabled(),
-                sessionConfig.getVideoQuality()
+                    sessionConfig.getDeviceId(),
+                    sessionConfig.getPosition(),
+                    sessionConfig.getX(),
+                    sessionConfig.getY(),
+                    sessionConfig.getWidth(),
+                    sessionConfig.getHeight(),
+                    sessionConfig.getPaddingBottom(),
+                    sessionConfig.getToBack(),
+                    sessionConfig.getStoreToFile(),
+                    sessionConfig.getEnableOpacity(),
+                    sessionConfig.getDisableExifHeaderStripping(),
+                    sessionConfig.getDisableAudio(),
+                    sessionConfig.getZoomFactor(),
+                    sessionConfig.getAspectRatio(),
+                    sessionConfig.getAspectMode(),
+                    gridMode,
+                    sessionConfig.getDisableFocusIndicator(),
+                    sessionConfig.isVideoModeEnabled(),
+                    sessionConfig.getVideoQuality()
             );
 
             // Update the grid overlay immediately
@@ -3181,34 +3182,34 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
             }
 
             Log.d(
-                TAG,
-                "getActualCameraBounds FILL_CENTER: container=" +
-                    containerWidth +
-                    "x" +
-                    containerHeight +
-                    ", camera=" +
-                    cameraWidth +
-                    "x" +
-                    cameraHeight +
-                    " (portrait=" +
-                    isPortrait +
-                    ")" +
-                    ", scale=" +
-                    scale +
-                    ", scaled=" +
-                    scaledWidth +
-                    "x" +
-                    scaledHeight +
-                    ", excess=" +
-                    excessWidth +
-                    "x" +
-                    excessHeight +
-                    ", adjusted=" +
-                    adjustedWidth +
-                    "x" +
-                    adjustedHeight +
-                    ", ratio=" +
-                    aspectRatio
+                    TAG,
+                    "getActualCameraBounds FILL_CENTER: container=" +
+                            containerWidth +
+                            "x" +
+                            containerHeight +
+                            ", camera=" +
+                            cameraWidth +
+                            "x" +
+                            cameraHeight +
+                            " (portrait=" +
+                            isPortrait +
+                            ")" +
+                            ", scale=" +
+                            scale +
+                            ", scaled=" +
+                            scaledWidth +
+                            "x" +
+                            scaledHeight +
+                            ", excess=" +
+                            excessWidth +
+                            "x" +
+                            excessHeight +
+                            ", adjusted=" +
+                            adjustedWidth +
+                            "x" +
+                            adjustedHeight +
+                            ", ratio=" +
+                            aspectRatio
             );
 
             // Return slightly inset bounds for 4:3 to avoid blue line
@@ -3233,37 +3234,37 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
         int offsetY = (containerHeight - scaledHeight) / 2;
 
         Log.d(
-            TAG,
-            "getActualCameraBounds FIT_CENTER: container=" +
-                containerWidth +
-                "x" +
-                containerHeight +
-                ", camera=" +
-                cameraWidth +
-                "x" +
-                cameraHeight +
-                " (swapped=" +
-                isPortrait +
-                ")" +
-                ", scale=" +
-                scale +
-                ", scaled=" +
-                scaledWidth +
-                "x" +
-                scaledHeight +
-                ", offset=(" +
-                offsetX +
-                "," +
-                offsetY +
-                ")"
+                TAG,
+                "getActualCameraBounds FIT_CENTER: container=" +
+                        containerWidth +
+                        "x" +
+                        containerHeight +
+                        ", camera=" +
+                        cameraWidth +
+                        "x" +
+                        cameraHeight +
+                        " (swapped=" +
+                        isPortrait +
+                        ")" +
+                        ", scale=" +
+                        scale +
+                        ", scaled=" +
+                        scaledWidth +
+                        "x" +
+                        scaledHeight +
+                        ", offset=(" +
+                        offsetX +
+                        "," +
+                        offsetY +
+                        ")"
         );
 
         // Return the bounds relative to the container
         return new Rect(
-            Math.max(0, offsetX),
-            Math.max(0, offsetY),
-            Math.min(containerWidth, offsetX + scaledWidth),
-            Math.min(containerHeight, offsetY + scaledHeight)
+                Math.max(0, offsetX),
+                Math.max(0, offsetY),
+                Math.min(containerWidth, offsetX + scaledWidth),
+                Math.min(containerHeight, offsetY + scaledHeight)
         );
     }
 
@@ -3308,8 +3309,8 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                     } else {
                         params.leftMargin = x + webViewLeftInset;
                         Log.d(
-                            TAG,
-                            "setPreviewSize: Positioned mode - x=" + x + " + inset=" + webViewLeftInset + " = " + (x + webViewLeftInset)
+                                TAG,
+                                "setPreviewSize: Positioned mode - x=" + x + " + inset=" + webViewLeftInset + " = " + (x + webViewLeftInset)
                         );
                     }
                 }
@@ -3321,8 +3322,8 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                     } else {
                         params.topMargin = y + webViewTopInset;
                         Log.d(
-                            TAG,
-                            "setPreviewSize: Positioned mode - y=" + y + " + inset=" + webViewTopInset + " = " + (y + webViewTopInset)
+                                TAG,
+                                "setPreviewSize: Positioned mode - y=" + y + " + inset=" + webViewTopInset + " = " + (y + webViewTopInset)
                         );
                     }
                 }
@@ -3333,16 +3334,16 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                 previewContainer.requestLayout();
 
                 Log.d(
-                    TAG,
-                    "setPreviewSize: Updated to " +
-                        params.width +
-                        "x" +
-                        params.height +
-                        " at (" +
-                        params.leftMargin +
-                        "," +
-                        params.topMargin +
-                        ")"
+                        TAG,
+                        "setPreviewSize: Updated to " +
+                                params.width +
+                                "x" +
+                                params.height +
+                                " at (" +
+                                params.leftMargin +
+                                "," +
+                                params.topMargin +
+                                ")"
                 );
 
                 // Update session config to reflect actual layout
@@ -3365,50 +3366,50 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                             calculatedAspectRatio = "4:3";
                         }
                         Log.d(
-                            TAG,
-                            "setPreviewSize: Calculated aspect ratio from " +
-                                params.width +
-                                "x" +
-                                params.height +
-                                " = " +
-                                calculatedAspectRatio +
-                                " (normalized ratio=" +
-                                ratio +
-                                ")"
+                                TAG,
+                                "setPreviewSize: Calculated aspect ratio from " +
+                                        params.width +
+                                        "x" +
+                                        params.height +
+                                        " = " +
+                                        calculatedAspectRatio +
+                                        " (normalized ratio=" +
+                                        ratio +
+                                        ")"
                         );
                     }
 
                     sessionConfig = new CameraSessionConfiguration(
-                        sessionConfig.getDeviceId(),
-                        sessionConfig.getPosition(),
-                        params.leftMargin,
-                        params.topMargin,
-                        params.width,
-                        params.height,
-                        sessionConfig.getPaddingBottom(),
-                        sessionConfig.getToBack(),
-                        sessionConfig.getStoreToFile(),
-                        sessionConfig.getEnableOpacity(),
-                        sessionConfig.getDisableExifHeaderStripping(),
-                        sessionConfig.getDisableAudio(),
-                        sessionConfig.getZoomFactor(),
-                        calculatedAspectRatio,
-                        sessionConfig.getAspectMode(),
-                        sessionConfig.getGridMode(),
-                        sessionConfig.getDisableFocusIndicator(),
-                        sessionConfig.isVideoModeEnabled(),
-                        sessionConfig.getVideoQuality()
+                            sessionConfig.getDeviceId(),
+                            sessionConfig.getPosition(),
+                            params.leftMargin,
+                            params.topMargin,
+                            params.width,
+                            params.height,
+                            sessionConfig.getPaddingBottom(),
+                            sessionConfig.getToBack(),
+                            sessionConfig.getStoreToFile(),
+                            sessionConfig.getEnableOpacity(),
+                            sessionConfig.getDisableExifHeaderStripping(),
+                            sessionConfig.getDisableAudio(),
+                            sessionConfig.getZoomFactor(),
+                            calculatedAspectRatio,
+                            sessionConfig.getAspectMode(),
+                            sessionConfig.getGridMode(),
+                            sessionConfig.getDisableFocusIndicator(),
+                            sessionConfig.isVideoModeEnabled(),
+                            sessionConfig.getVideoQuality()
                     );
 
                     // If aspect ratio changed due to size update, rebind camera
                     if (isRunning && !Objects.equals(currentAspectRatio, calculatedAspectRatio)) {
                         Log.d(
-                            TAG,
-                            "setPreviewSize: Aspect ratio changed from " +
-                                currentAspectRatio +
-                                " to " +
-                                calculatedAspectRatio +
-                                ", rebinding camera"
+                                TAG,
+                                "setPreviewSize: Aspect ratio changed from " +
+                                        currentAspectRatio +
+                                        " to " +
+                                        calculatedAspectRatio +
+                                        ", rebinding camera"
                         );
                         bindCameraUseCases();
 
@@ -3556,8 +3557,8 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
             finalY = (webViewHeight - finalHeight) / 2;
 
             Log.d(
-                TAG,
-                "Auto-center mode: calculated size " + finalWidth + "x" + finalHeight + " at position (" + finalX + ", " + finalY + ")"
+                    TAG,
+                    "Auto-center mode: calculated size " + finalWidth + "x" + finalHeight + " at position (" + finalX + ", " + finalY + ")"
             );
 
             Log.d(TAG, "Final calculated layout - Position: (" + finalX + "," + finalY + "), Size: " + finalWidth + "x" + finalHeight);
@@ -3572,14 +3573,14 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                 double expectedDisplayRatio = isPortrait ? (ratioHeight / ratioWidth) : (ratioWidth / ratioHeight);
                 double difference = Math.abs(displayedRatio - expectedDisplayRatio);
                 Log.d(
-                    TAG,
-                    "Display ratio check - Expected: " +
-                        expectedDisplayRatio +
-                        ", Actual: " +
-                        displayedRatio +
-                        ", Difference: " +
-                        difference +
-                        " (tolerance should be < 0.01)"
+                        TAG,
+                        "Display ratio check - Expected: " +
+                                expectedDisplayRatio +
+                                ", Actual: " +
+                                displayedRatio +
+                                ", Difference: " +
+                                difference +
+                                " (tolerance should be < 0.01)"
                 );
             }
 
@@ -3599,15 +3600,15 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                 // Update grid overlay bounds after aspect ratio change
                 previewContainer.post(() -> {
                     Log.d(
-                        TAG,
-                        "Post-layout verification - Actual position: " +
-                            previewContainer.getLeft() +
-                            "," +
-                            previewContainer.getTop() +
-                            ", Actual size: " +
-                            previewContainer.getWidth() +
-                            "x" +
-                            previewContainer.getHeight()
+                            TAG,
+                            "Post-layout verification - Actual position: " +
+                                    previewContainer.getLeft() +
+                                    "," +
+                                    previewContainer.getTop() +
+                                    ", Actual size: " +
+                                    previewContainer.getWidth() +
+                                    "x" +
+                                    previewContainer.getHeight()
                     );
                     updateGridOverlayBounds();
                 });
@@ -3679,34 +3680,34 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
 
         // Debug logging to understand the blue line issue
         Log.d(
-            TAG,
-            "getCurrentPreviewBounds DEBUG: " +
-                "actualBounds=(" +
-                actualX +
-                "," +
-                actualY +
-                "," +
-                actualWidth +
-                "x" +
-                actualHeight +
-                "), " +
-                "logicalBounds=(" +
-                x +
-                "," +
-                y +
-                "," +
-                width +
-                "x" +
-                height +
-                "), " +
-                "pixelRatio=" +
-                pixelRatio +
-                ", " +
-                "insets=(" +
-                webViewLeftInset +
-                "," +
-                webViewTopInset +
-                ")"
+                TAG,
+                "getCurrentPreviewBounds DEBUG: " +
+                        "actualBounds=(" +
+                        actualX +
+                        "," +
+                        actualY +
+                        "," +
+                        actualWidth +
+                        "x" +
+                        actualHeight +
+                        "), " +
+                        "logicalBounds=(" +
+                        x +
+                        "," +
+                        y +
+                        "," +
+                        width +
+                        "x" +
+                        height +
+                        "), " +
+                        "pixelRatio=" +
+                        pixelRatio +
+                        ", " +
+                        "insets=(" +
+                        webViewLeftInset +
+                        "," +
+                        webViewTopInset +
+                        ")"
         );
 
         return new int[] { x, y, width, height };
@@ -3765,15 +3766,15 @@ public class CameraXView implements LifecycleOwner, LifecycleObserver {
                 return;
             }
             currentRecording = videoCapture
-                .getOutput()
-                .prepareRecording(context, outputOptions)
-                .withAudioEnabled()
-                .start(ContextCompat.getMainExecutor(context), videoRecordEventListener);
+                    .getOutput()
+                    .prepareRecording(context, outputOptions)
+                    .withAudioEnabled()
+                    .start(ContextCompat.getMainExecutor(context), videoRecordEventListener);
         } else {
             currentRecording = videoCapture
-                .getOutput()
-                .prepareRecording(context, outputOptions)
-                .start(ContextCompat.getMainExecutor(context), videoRecordEventListener);
+                    .getOutput()
+                    .prepareRecording(context, outputOptions)
+                    .start(ContextCompat.getMainExecutor(context), videoRecordEventListener);
         }
 
         Log.d(TAG, "Video recording started to: " + currentVideoFile.getAbsolutePath());

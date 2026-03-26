@@ -50,16 +50,16 @@ import java.util.Objects;
 import org.json.JSONObject;
 
 @CapacitorPlugin(
-    name = "CameraPreview",
-    permissions = {
-        @Permission(strings = { CAMERA, RECORD_AUDIO }, alias = CameraPreview.CAMERA_WITH_AUDIO_PERMISSION_ALIAS),
-        @Permission(strings = { CAMERA }, alias = CameraPreview.CAMERA_ONLY_PERMISSION_ALIAS),
-        @Permission(
-            strings = { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION },
-            alias = CameraPreview.CAMERA_WITH_LOCATION_PERMISSION_ALIAS
-        ),
-        @Permission(strings = { RECORD_AUDIO }, alias = CameraPreview.MICROPHONE_ONLY_PERMISSION_ALIAS)
-    }
+        name = "CameraPreview",
+        permissions = {
+                @Permission(strings = { CAMERA, RECORD_AUDIO }, alias = CameraPreview.CAMERA_WITH_AUDIO_PERMISSION_ALIAS),
+                @Permission(strings = { CAMERA }, alias = CameraPreview.CAMERA_ONLY_PERMISSION_ALIAS),
+                @Permission(
+                        strings = { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION },
+                        alias = CameraPreview.CAMERA_WITH_LOCATION_PERMISSION_ALIAS
+                ),
+                @Permission(strings = { RECORD_AUDIO }, alias = CameraPreview.MICROPHONE_ONLY_PERMISSION_ALIAS)
+        }
 )
 public class CameraPreview extends Plugin implements CameraXView.CameraXViewListener {
 
@@ -83,9 +83,9 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
             if (lastSessionConfig.isToBack()) {
                 try {
                     getBridge()
-                        .getActivity()
-                        .getWindow()
-                        .setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.BLACK));
+                            .getActivity()
+                            .getWindow()
+                            .setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.BLACK));
                     getBridge().getWebView().setBackgroundColor(android.graphics.Color.BLACK);
                 } catch (Exception ignored) {}
             }
@@ -328,10 +328,10 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
     private void captureWithLocationPermission(PluginCall call) {
         if (getPermissionState(CAMERA_WITH_LOCATION_PERMISSION_ALIAS) == PermissionState.GRANTED) {
             if (
-                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) !=
-                    PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED
+                    ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) !=
+                            PackageManager.PERMISSION_GRANTED ||
+                            ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                                    PackageManager.PERMISSION_GRANTED
             ) {
                 return;
             }
@@ -348,15 +348,15 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
         }
         fusedLocationClient
-            .getLastLocation()
-            .addOnSuccessListener(getActivity(), (location) -> {
-                lastLocation = location;
-                proceedWithCapture(call, lastLocation);
-            })
-            .addOnFailureListener((e) -> {
-                Logger.error("Failed to get location: " + e.getMessage());
-                proceedWithCapture(call, null);
-            });
+                .getLastLocation()
+                .addOnSuccessListener(getActivity(), (location) -> {
+                    lastLocation = location;
+                    proceedWithCapture(call, lastLocation);
+                })
+                .addOnFailureListener((e) -> {
+                    Logger.error("Failed to get location: " + e.getMessage());
+                    proceedWithCapture(call, null);
+                });
     }
 
     private void captureWithoutLocation(PluginCall call) {
@@ -394,42 +394,42 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
         boolean force = Boolean.TRUE.equals(call.getBoolean("force", false));
 
         bridge
-            .getActivity()
-            .runOnUiThread(() -> {
-                getBridge().getActivity().setRequestedOrientation(previousOrientationRequest);
+                .getActivity()
+                .runOnUiThread(() -> {
+                    getBridge().getActivity().setRequestedOrientation(previousOrientationRequest);
 
-                // Disable and clear orientation listener
-                if (orientationListener != null) {
-                    orientationListener.disable();
-                    orientationListener = null;
-                    lastOrientation = Configuration.ORIENTATION_UNDEFINED;
-                }
-
-                // Remove any rotation overlay if present
-                if (rotationOverlay != null && rotationOverlay.getParent() != null) {
-                    ((ViewGroup) rotationOverlay.getParent()).removeView(rotationOverlay);
-                    rotationOverlay = null;
-                }
-
-                if (cameraXView != null) {
-                    cameraXView.stopSession();
-                    // If force is true, always drop the reference
-                    // Otherwise only drop the reference if no deferred stop is pending
-                    if (force || !cameraXView.isStopDeferred()) {
-                        cameraXView = null;
+                    // Disable and clear orientation listener
+                    if (orientationListener != null) {
+                        orientationListener.disable();
+                        orientationListener = null;
+                        lastOrientation = Configuration.ORIENTATION_UNDEFINED;
                     }
-                }
-                // Manual stops should not trigger automatic resume with stale config
-                lastSessionConfig = null;
-                // Restore original window background if modified earlier
-                if (originalWindowBackground != null) {
-                    try {
-                        getBridge().getActivity().getWindow().setBackgroundDrawable(originalWindowBackground);
-                    } catch (Exception ignored) {}
-                    originalWindowBackground = null;
-                }
-                call.resolve();
-            });
+
+                    // Remove any rotation overlay if present
+                    if (rotationOverlay != null && rotationOverlay.getParent() != null) {
+                        ((ViewGroup) rotationOverlay.getParent()).removeView(rotationOverlay);
+                        rotationOverlay = null;
+                    }
+
+                    if (cameraXView != null) {
+                        cameraXView.stopSession();
+                        // If force is true, always drop the reference
+                        // Otherwise only drop the reference if no deferred stop is pending
+                        if (force || !cameraXView.isStopDeferred()) {
+                            cameraXView = null;
+                        }
+                    }
+                    // Manual stops should not trigger automatic resume with stale config
+                    lastSessionConfig = null;
+                    // Restore original window background if modified earlier
+                    if (originalWindowBackground != null) {
+                        try {
+                            getBridge().getActivity().getWindow().setBackgroundDrawable(originalWindowBackground);
+                        } catch (Exception ignored) {}
+                        originalWindowBackground = null;
+                    }
+                    call.resolve();
+                });
     }
 
     @PluginMethod
@@ -728,21 +728,21 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
             }
 
             AlertDialog dialog = new AlertDialog.Builder(activity)
-                .setTitle(title)
-                .setMessage(message)
-                .setNegativeButton(cancelText, (d, which) -> {
-                    d.dismiss();
-                    isCameraPermissionDialogShowing = false;
-                })
-                .setPositiveButton(openSettingsText, (d, which) -> {
-                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
-                    intent.setData(uri);
-                    activity.startActivity(intent);
-                    isCameraPermissionDialogShowing = false;
-                })
-                .setOnDismissListener((d) -> isCameraPermissionDialogShowing = false)
-                .create();
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setNegativeButton(cancelText, (d, which) -> {
+                        d.dismiss();
+                        isCameraPermissionDialogShowing = false;
+                    })
+                    .setPositiveButton(openSettingsText, (d, which) -> {
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
+                        intent.setData(uri);
+                        activity.startActivity(intent);
+                        isCameraPermissionDialogShowing = false;
+                    })
+                    .setOnDismissListener((d) -> isCameraPermissionDialogShowing = false)
+                    .create();
 
             isCameraPermissionDialogShowing = true;
             dialog.show();
@@ -818,8 +818,8 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
         }
 
         boolean showSettingsAlert = call.getBoolean("showSettingsAlert") != null
-            ? Boolean.TRUE.equals(call.getBoolean("showSettingsAlert"))
-            : false;
+                ? Boolean.TRUE.equals(call.getBoolean("showSettingsAlert"))
+                : false;
 
         String cameraStateString = result.getString("camera");
         boolean cameraNeedsSettings = "denied".equals(cameraStateString) || "prompt-with-rationale".equals(cameraStateString);
@@ -853,8 +853,8 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
     @PermissionCallback
     private void handleCameraPermissionResult(PluginCall call) {
         if (
-            PermissionState.GRANTED.equals(getPermissionState(CAMERA_ONLY_PERMISSION_ALIAS)) ||
-            PermissionState.GRANTED.equals(getPermissionState(CAMERA_WITH_AUDIO_PERMISSION_ALIAS))
+                PermissionState.GRANTED.equals(getPermissionState(CAMERA_ONLY_PERMISSION_ALIAS)) ||
+                        PermissionState.GRANTED.equals(getPermissionState(CAMERA_WITH_AUDIO_PERMISSION_ALIAS))
         ) {
             startCamera(call);
         } else {
@@ -871,8 +871,8 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
                 positionParam.isEmpty() ||
                 "rear".equals(positionParam) ||
                 "back".equals(positionParam))
-            ? "back"
-            : "front";
+                ? "back"
+                : "front";
         // Use -1 as default to indicate centering is needed when x/y not provided
         final Integer xParam = call.getInt("x");
         final Integer yParam = call.getInt("y");
@@ -940,309 +940,309 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
         String finalDeviceId = deviceId;
         float finalTargetZoom = targetZoom;
         getBridge()
-            .getActivity()
-            .runOnUiThread(() -> {
-                // Ensure transparent background when preview is behind the WebView (Android 10 fix)
-                if (toBack) {
-                    try {
-                        if (originalWindowBackground == null) {
-                            originalWindowBackground = getBridge().getActivity().getWindow().getDecorView().getBackground();
-                        }
-                        // Set to solid black first to prevent flickering during transition
-                        // This provides a stable base before camera preview is ready
-                        getBridge().getActivity().getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
-                    } catch (Exception ignored) {}
-                }
-                DisplayMetrics metrics = getBridge().getActivity().getResources().getDisplayMetrics();
-                if (lockOrientation) {
-                    getBridge().getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-                }
-
-                // Debug: Let's check all the positioning information
-                ViewGroup webViewParent = (ViewGroup) getBridge().getWebView().getParent();
-
-                // Get webview position in different coordinate systems
-                int[] webViewLocationInWindow = new int[2];
-                int[] webViewLocationOnScreen = new int[2];
-                getBridge().getWebView().getLocationInWindow(webViewLocationInWindow);
-                getBridge().getWebView().getLocationOnScreen(webViewLocationOnScreen);
-
-                int webViewLeft = getBridge().getWebView().getLeft();
-                int webViewTop = getBridge().getWebView().getTop();
-
-                // Check parent position too
-                int[] parentLocationInWindow = new int[2];
-                int[] parentLocationOnScreen = new int[2];
-                webViewParent.getLocationInWindow(parentLocationInWindow);
-                webViewParent.getLocationOnScreen(parentLocationOnScreen);
-
-                // Calculate pixel ratio
-                float pixelRatio = metrics.density;
-
-                // The key insight: JavaScript coordinates are relative to the WebView's viewport
-                // If the WebView is positioned below the status bar (webViewLocationOnScreen[1] > 0),
-                // we need to add that offset when placing native views
-                int webViewTopInset = webViewLocationOnScreen[1];
-                boolean isEdgeToEdgeActive = webViewLocationOnScreen[1] > 0;
-
-                // Log all the positioning information for debugging
-                Log.d("CameraPreview", "WebView Position Debug:");
-                Log.d("CameraPreview", "  - webView.getTop(): " + webViewTop);
-                Log.d("CameraPreview", "  - webView.getLeft(): " + webViewLeft);
-                Log.d(
-                    "CameraPreview",
-                    "  - webView locationInWindow: (" + webViewLocationInWindow[0] + ", " + webViewLocationInWindow[1] + ")"
-                );
-                Log.d(
-                    "CameraPreview",
-                    "  - webView locationOnScreen: (" + webViewLocationOnScreen[0] + ", " + webViewLocationOnScreen[1] + ")"
-                );
-                Log.d(
-                    "CameraPreview",
-                    "  - parent locationInWindow: (" + parentLocationInWindow[0] + ", " + parentLocationInWindow[1] + ")"
-                );
-                Log.d(
-                    "CameraPreview",
-                    "  - parent locationOnScreen: (" + parentLocationOnScreen[0] + ", " + parentLocationOnScreen[1] + ")"
-                );
-
-                // Check if WebView has margins
-                View webView = getBridge().getWebView();
-                ViewGroup.LayoutParams webViewLayoutParams = webView.getLayoutParams();
-                if (webViewLayoutParams instanceof ViewGroup.MarginLayoutParams) {
-                    ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) webViewLayoutParams;
-                    Log.d(
-                        "CameraPreview",
-                        "  - webView margins: left=" +
-                            marginParams.leftMargin +
-                            ", top=" +
-                            marginParams.topMargin +
-                            ", right=" +
-                            marginParams.rightMargin +
-                            ", bottom=" +
-                            marginParams.bottomMargin
-                    );
-                }
-
-                // Check WebView padding
-                Log.d(
-                    "CameraPreview",
-                    "  - webView padding: left=" +
-                        webView.getPaddingLeft() +
-                        ", top=" +
-                        webView.getPaddingTop() +
-                        ", right=" +
-                        webView.getPaddingRight() +
-                        ", bottom=" +
-                        webView.getPaddingBottom()
-                );
-
-                Log.d("CameraPreview", "  - Using webViewTopInset: " + webViewTopInset);
-                Log.d("CameraPreview", "  - isEdgeToEdgeActive: " + isEdgeToEdgeActive);
-
-                // Calculate position - center if x or y is -1
-                int computedX;
-                int computedY;
-
-                // Calculate dimensions first
-                int computedWidth = width != 0 ? (int) (width * pixelRatio) : getBridge().getWebView().getWidth();
-                int computedHeight = height != 0 ? (int) (height * pixelRatio) : getBridge().getWebView().getHeight();
-                computedHeight -= (int) (paddingBottom * pixelRatio);
-
-                Log.d("CameraPreview", "========================");
-                Log.d("CameraPreview", "POSITIONING CALCULATIONS:");
-                Log.d("CameraPreview", "1. INPUT - x: " + x + ", y: " + y + ", width: " + width + ", height: " + height);
-                Log.d("CameraPreview", "2. PIXEL RATIO: " + pixelRatio);
-                Log.d("CameraPreview", "3. SCREEN - width: " + metrics.widthPixels + ", height: " + metrics.heightPixels);
-                Log.d(
-                    "CameraPreview",
-                    "4. WEBVIEW - width: " + getBridge().getWebView().getWidth() + ", height: " + getBridge().getWebView().getHeight()
-                );
-                Log.d("CameraPreview", "5. COMPUTED DIMENSIONS - width: " + computedWidth + ", height: " + computedHeight);
-
-                if (x == -1) {
-                    // Center horizontally
-                    int screenWidth = metrics.widthPixels;
-                    computedX = (screenWidth - computedWidth) / 2;
-                    Log.d(
-                        "CameraPreview",
-                        "Centering horizontally: screenWidth=" +
-                            screenWidth +
-                            ", computedWidth=" +
-                            computedWidth +
-                            ", computedX=" +
-                            computedX
-                    );
-                } else {
-                    computedX = (int) (x * pixelRatio);
-                    Log.d("CameraPreview", "Using provided X position: " + x + " * " + pixelRatio + " = " + computedX);
-                }
-
-                if (y == -1) {
-                    // Position vertically based on positioning parameter
-                    int screenHeight = metrics.heightPixels;
-
-                    switch (Objects.requireNonNull(positioning)) {
-                        case "top":
-                            computedY = 0;
-                            Log.d("CameraPreview", "Positioning at top: computedY=0");
-                            break;
-                        case "bottom":
-                            computedY = screenHeight - computedHeight;
-                            Log.d(
-                                "CameraPreview",
-                                "Positioning at bottom: screenHeight=" +
-                                    screenHeight +
-                                    ", computedHeight=" +
-                                    computedHeight +
-                                    ", computedY=" +
-                                    computedY
-                            );
-                            break;
-                        case "center":
-                        default:
-                            // Center vertically
-                            if (isEdgeToEdgeActive) {
-                                // When WebView is offset from top, center within the available space
-                                // The camera should be centered in the full screen, not just the WebView area
-                                computedY = (screenHeight - computedHeight) / 2;
-                                Log.d(
-                                    "CameraPreview",
-                                    "Centering vertically with WebView offset: screenHeight=" +
-                                        screenHeight +
-                                        ", webViewTop=" +
-                                        webViewTopInset +
-                                        ", computedHeight=" +
-                                        computedHeight +
-                                        ", computedY=" +
-                                        computedY
-                                );
-                            } else {
-                                // Normal mode - use full screen height
-                                computedY = (screenHeight - computedHeight) / 2;
-                                Log.d(
-                                    "CameraPreview",
-                                    "Centering vertically (normal): screenHeight=" +
-                                        screenHeight +
-                                        ", computedHeight=" +
-                                        computedHeight +
-                                        ", computedY=" +
-                                        computedY
-                                );
+                .getActivity()
+                .runOnUiThread(() -> {
+                    // Ensure transparent background when preview is behind the WebView (Android 10 fix)
+                    if (toBack) {
+                        try {
+                            if (originalWindowBackground == null) {
+                                originalWindowBackground = getBridge().getActivity().getWindow().getDecorView().getBackground();
                             }
-                            break;
+                            // Set to solid black first to prevent flickering during transition
+                            // This provides a stable base before camera preview is ready
+                            getBridge().getActivity().getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+                        } catch (Exception ignored) {}
                     }
-                } else {
-                    computedY = (int) (y * pixelRatio);
-                    // If edge-to-edge is active, JavaScript Y is relative to WebView content area
-                    // We need to add the inset to get absolute screen position
-                    if (isEdgeToEdgeActive) {
-                        computedY += webViewTopInset;
-                        Log.d(
+                    DisplayMetrics metrics = getBridge().getActivity().getResources().getDisplayMetrics();
+                    if (lockOrientation) {
+                        getBridge().getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+                    }
+
+                    // Debug: Let's check all the positioning information
+                    ViewGroup webViewParent = (ViewGroup) getBridge().getWebView().getParent();
+
+                    // Get webview position in different coordinate systems
+                    int[] webViewLocationInWindow = new int[2];
+                    int[] webViewLocationOnScreen = new int[2];
+                    getBridge().getWebView().getLocationInWindow(webViewLocationInWindow);
+                    getBridge().getWebView().getLocationOnScreen(webViewLocationOnScreen);
+
+                    int webViewLeft = getBridge().getWebView().getLeft();
+                    int webViewTop = getBridge().getWebView().getTop();
+
+                    // Check parent position too
+                    int[] parentLocationInWindow = new int[2];
+                    int[] parentLocationOnScreen = new int[2];
+                    webViewParent.getLocationInWindow(parentLocationInWindow);
+                    webViewParent.getLocationOnScreen(parentLocationOnScreen);
+
+                    // Calculate pixel ratio
+                    float pixelRatio = metrics.density;
+
+                    // The key insight: JavaScript coordinates are relative to the WebView's viewport
+                    // If the WebView is positioned below the status bar (webViewLocationOnScreen[1] > 0),
+                    // we need to add that offset when placing native views
+                    int webViewTopInset = webViewLocationOnScreen[1];
+                    boolean isEdgeToEdgeActive = webViewLocationOnScreen[1] > 0;
+
+                    // Log all the positioning information for debugging
+                    Log.d("CameraPreview", "WebView Position Debug:");
+                    Log.d("CameraPreview", "  - webView.getTop(): " + webViewTop);
+                    Log.d("CameraPreview", "  - webView.getLeft(): " + webViewLeft);
+                    Log.d(
                             "CameraPreview",
-                            "Edge-to-edge adjustment: Y position " +
-                                (int) (y * pixelRatio) +
-                                " + inset " +
-                                webViewTopInset +
-                                " = " +
-                                computedY
+                            "  - webView locationInWindow: (" + webViewLocationInWindow[0] + ", " + webViewLocationInWindow[1] + ")"
+                    );
+                    Log.d(
+                            "CameraPreview",
+                            "  - webView locationOnScreen: (" + webViewLocationOnScreen[0] + ", " + webViewLocationOnScreen[1] + ")"
+                    );
+                    Log.d(
+                            "CameraPreview",
+                            "  - parent locationInWindow: (" + parentLocationInWindow[0] + ", " + parentLocationInWindow[1] + ")"
+                    );
+                    Log.d(
+                            "CameraPreview",
+                            "  - parent locationOnScreen: (" + parentLocationOnScreen[0] + ", " + parentLocationOnScreen[1] + ")"
+                    );
+
+                    // Check if WebView has margins
+                    View webView = getBridge().getWebView();
+                    ViewGroup.LayoutParams webViewLayoutParams = webView.getLayoutParams();
+                    if (webViewLayoutParams instanceof ViewGroup.MarginLayoutParams) {
+                        ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) webViewLayoutParams;
+                        Log.d(
+                                "CameraPreview",
+                                "  - webView margins: left=" +
+                                        marginParams.leftMargin +
+                                        ", top=" +
+                                        marginParams.topMargin +
+                                        ", right=" +
+                                        marginParams.rightMargin +
+                                        ", bottom=" +
+                                        marginParams.bottomMargin
                         );
                     }
+
+                    // Check WebView padding
                     Log.d(
-                        "CameraPreview",
-                        "Using provided Y position: " +
-                            y +
-                            " * " +
-                            pixelRatio +
-                            " = " +
-                            computedY +
-                            (isEdgeToEdgeActive ? " (adjusted for edge-to-edge)" : "")
+                            "CameraPreview",
+                            "  - webView padding: left=" +
+                                    webView.getPaddingLeft() +
+                                    ", top=" +
+                                    webView.getPaddingTop() +
+                                    ", right=" +
+                                    webView.getPaddingRight() +
+                                    ", bottom=" +
+                                    webView.getPaddingBottom()
                     );
-                }
 
-                Log.d(
-                    "CameraPreview",
-                    "2b. EDGE-TO-EDGE - " + (isEdgeToEdgeActive ? "ACTIVE (inset=" + webViewTopInset + ")" : "INACTIVE")
-                );
-                Log.d("CameraPreview", "3. COMPUTED POSITION - x=" + computedX + ", y=" + computedY);
-                Log.d("CameraPreview", "4. COMPUTED SIZE - width=" + computedWidth + ", height=" + computedHeight);
-                Log.d("CameraPreview", "=== COORDINATE DEBUG ===");
-                Log.d("CameraPreview", "WebView getLeft/getTop: (" + webViewLeft + ", " + webViewTop + ")");
-                Log.d(
-                    "CameraPreview",
-                    "WebView locationInWindow: (" + webViewLocationInWindow[0] + ", " + webViewLocationInWindow[1] + ")"
-                );
-                Log.d(
-                    "CameraPreview",
-                    "WebView locationOnScreen: (" + webViewLocationOnScreen[0] + ", " + webViewLocationOnScreen[1] + ")"
-                );
-                Log.d("CameraPreview", "Parent locationInWindow: (" + parentLocationInWindow[0] + ", " + parentLocationInWindow[1] + ")");
-                Log.d("CameraPreview", "Parent locationOnScreen: (" + parentLocationOnScreen[0] + ", " + parentLocationOnScreen[1] + ")");
-                Log.d("CameraPreview", "Parent class: " + webViewParent.getClass().getSimpleName());
-                Log.d("CameraPreview", "Requested position (logical): (" + x + ", " + y + ")");
-                Log.d("CameraPreview", "Pixel ratio: " + pixelRatio);
-                Log.d("CameraPreview", "Final computed position (no offset): (" + computedX + ", " + computedY + ")");
-                Log.d("CameraPreview", "5. IS_CENTERED - " + (x == -1 || y == -1));
-                Log.d("CameraPreview", "========================");
+                    Log.d("CameraPreview", "  - Using webViewTopInset: " + webViewTopInset);
+                    Log.d("CameraPreview", "  - isEdgeToEdgeActive: " + isEdgeToEdgeActive);
 
-                // Pass along whether we're centering so CameraXView knows not to add insets
-                boolean isCentered = (x == -1 || y == -1);
+                    // Calculate position - center if x or y is -1
+                    int computedX;
+                    int computedY;
 
-                CameraSessionConfiguration config = new CameraSessionConfiguration(
-                    finalDeviceId,
-                    position,
-                    computedX,
-                    computedY,
-                    computedWidth,
-                    computedHeight,
-                    paddingBottom,
-                    toBack,
-                    storeToFile,
-                    enableOpacity,
-                    disableExifHeaderStripping,
-                    disableAudio,
-                    1.0f,
-                    aspectRatio,
-                    aspectMode,
-                    gridMode,
-                    disableFocusIndicator,
-                    enableVideoMode,
-                    videoQuality
-                );
-                config.setTargetZoom(finalTargetZoom);
-                config.setCentered(isCentered);
+                    // Calculate dimensions first
+                    int computedWidth = width != 0 ? (int) (width * pixelRatio) : getBridge().getWebView().getWidth();
+                    int computedHeight = height != 0 ? (int) (height * pixelRatio) : getBridge().getWebView().getHeight();
+                    computedHeight -= (int) (paddingBottom * pixelRatio);
 
-                bridge.saveCall(call);
-                cameraStartCallbackId = call.getCallbackId();
-                cameraXView.startSession(config);
+                    Log.d("CameraPreview", "========================");
+                    Log.d("CameraPreview", "POSITIONING CALCULATIONS:");
+                    Log.d("CameraPreview", "1. INPUT - x: " + x + ", y: " + y + ", width: " + width + ", height: " + height);
+                    Log.d("CameraPreview", "2. PIXEL RATIO: " + pixelRatio);
+                    Log.d("CameraPreview", "3. SCREEN - width: " + metrics.widthPixels + ", height: " + metrics.heightPixels);
+                    Log.d(
+                            "CameraPreview",
+                            "4. WEBVIEW - width: " + getBridge().getWebView().getWidth() + ", height: " + getBridge().getWebView().getHeight()
+                    );
+                    Log.d("CameraPreview", "5. COMPUTED DIMENSIONS - width: " + computedWidth + ", height: " + computedHeight);
 
-                // Setup orientation listener to mirror iOS screenResize emission
-                if (orientationListener == null) {
-                    lastOrientation = getContext().getResources().getConfiguration().orientation;
-                    lastOrientationStr = getDeviceOrientationString();
-                    orientationListener = new OrientationEventListener(getContext()) {
-                        @Override
-                        public void onOrientationChanged(int orientation) {
-                            if (orientation == ORIENTATION_UNKNOWN) return;
-                            int current = getContext().getResources().getConfiguration().orientation;
-                            String currentStr = getDeviceOrientationString();
-                            if (current != lastOrientation || !Objects.equals(currentStr, lastOrientationStr)) {
-                                lastOrientation = current;
-                                lastOrientationStr = currentStr;
-                                // Post to next frame so WebView has updated bounds before we recompute layout
-                                getBridge()
-                                    .getActivity()
-                                    .getWindow()
-                                    .getDecorView()
-                                    .post(() -> handleOrientationChange());
-                            }
-                        }
-                    };
-                    if (orientationListener.canDetectOrientation()) {
-                        orientationListener.enable();
+                    if (x == -1) {
+                        // Center horizontally
+                        int screenWidth = metrics.widthPixels;
+                        computedX = (screenWidth - computedWidth) / 2;
+                        Log.d(
+                                "CameraPreview",
+                                "Centering horizontally: screenWidth=" +
+                                        screenWidth +
+                                        ", computedWidth=" +
+                                        computedWidth +
+                                        ", computedX=" +
+                                        computedX
+                        );
+                    } else {
+                        computedX = (int) (x * pixelRatio);
+                        Log.d("CameraPreview", "Using provided X position: " + x + " * " + pixelRatio + " = " + computedX);
                     }
-                }
-            });
+
+                    if (y == -1) {
+                        // Position vertically based on positioning parameter
+                        int screenHeight = metrics.heightPixels;
+
+                        switch (Objects.requireNonNull(positioning)) {
+                            case "top":
+                                computedY = 0;
+                                Log.d("CameraPreview", "Positioning at top: computedY=0");
+                                break;
+                            case "bottom":
+                                computedY = screenHeight - computedHeight;
+                                Log.d(
+                                        "CameraPreview",
+                                        "Positioning at bottom: screenHeight=" +
+                                                screenHeight +
+                                                ", computedHeight=" +
+                                                computedHeight +
+                                                ", computedY=" +
+                                                computedY
+                                );
+                                break;
+                            case "center":
+                            default:
+                                // Center vertically
+                                if (isEdgeToEdgeActive) {
+                                    // When WebView is offset from top, center within the available space
+                                    // The camera should be centered in the full screen, not just the WebView area
+                                    computedY = (screenHeight - computedHeight) / 2;
+                                    Log.d(
+                                            "CameraPreview",
+                                            "Centering vertically with WebView offset: screenHeight=" +
+                                                    screenHeight +
+                                                    ", webViewTop=" +
+                                                    webViewTopInset +
+                                                    ", computedHeight=" +
+                                                    computedHeight +
+                                                    ", computedY=" +
+                                                    computedY
+                                    );
+                                } else {
+                                    // Normal mode - use full screen height
+                                    computedY = (screenHeight - computedHeight) / 2;
+                                    Log.d(
+                                            "CameraPreview",
+                                            "Centering vertically (normal): screenHeight=" +
+                                                    screenHeight +
+                                                    ", computedHeight=" +
+                                                    computedHeight +
+                                                    ", computedY=" +
+                                                    computedY
+                                    );
+                                }
+                                break;
+                        }
+                    } else {
+                        computedY = (int) (y * pixelRatio);
+                        // If edge-to-edge is active, JavaScript Y is relative to WebView content area
+                        // We need to add the inset to get absolute screen position
+                        if (isEdgeToEdgeActive) {
+                            computedY += webViewTopInset;
+                            Log.d(
+                                    "CameraPreview",
+                                    "Edge-to-edge adjustment: Y position " +
+                                            (int) (y * pixelRatio) +
+                                            " + inset " +
+                                            webViewTopInset +
+                                            " = " +
+                                            computedY
+                            );
+                        }
+                        Log.d(
+                                "CameraPreview",
+                                "Using provided Y position: " +
+                                        y +
+                                        " * " +
+                                        pixelRatio +
+                                        " = " +
+                                        computedY +
+                                        (isEdgeToEdgeActive ? " (adjusted for edge-to-edge)" : "")
+                        );
+                    }
+
+                    Log.d(
+                            "CameraPreview",
+                            "2b. EDGE-TO-EDGE - " + (isEdgeToEdgeActive ? "ACTIVE (inset=" + webViewTopInset + ")" : "INACTIVE")
+                    );
+                    Log.d("CameraPreview", "3. COMPUTED POSITION - x=" + computedX + ", y=" + computedY);
+                    Log.d("CameraPreview", "4. COMPUTED SIZE - width=" + computedWidth + ", height=" + computedHeight);
+                    Log.d("CameraPreview", "=== COORDINATE DEBUG ===");
+                    Log.d("CameraPreview", "WebView getLeft/getTop: (" + webViewLeft + ", " + webViewTop + ")");
+                    Log.d(
+                            "CameraPreview",
+                            "WebView locationInWindow: (" + webViewLocationInWindow[0] + ", " + webViewLocationInWindow[1] + ")"
+                    );
+                    Log.d(
+                            "CameraPreview",
+                            "WebView locationOnScreen: (" + webViewLocationOnScreen[0] + ", " + webViewLocationOnScreen[1] + ")"
+                    );
+                    Log.d("CameraPreview", "Parent locationInWindow: (" + parentLocationInWindow[0] + ", " + parentLocationInWindow[1] + ")");
+                    Log.d("CameraPreview", "Parent locationOnScreen: (" + parentLocationOnScreen[0] + ", " + parentLocationOnScreen[1] + ")");
+                    Log.d("CameraPreview", "Parent class: " + webViewParent.getClass().getSimpleName());
+                    Log.d("CameraPreview", "Requested position (logical): (" + x + ", " + y + ")");
+                    Log.d("CameraPreview", "Pixel ratio: " + pixelRatio);
+                    Log.d("CameraPreview", "Final computed position (no offset): (" + computedX + ", " + computedY + ")");
+                    Log.d("CameraPreview", "5. IS_CENTERED - " + (x == -1 || y == -1));
+                    Log.d("CameraPreview", "========================");
+
+                    // Pass along whether we're centering so CameraXView knows not to add insets
+                    boolean isCentered = (x == -1 || y == -1);
+
+                    CameraSessionConfiguration config = new CameraSessionConfiguration(
+                            finalDeviceId,
+                            position,
+                            computedX,
+                            computedY,
+                            computedWidth,
+                            computedHeight,
+                            paddingBottom,
+                            toBack,
+                            storeToFile,
+                            enableOpacity,
+                            disableExifHeaderStripping,
+                            disableAudio,
+                            1.0f,
+                            aspectRatio,
+                            aspectMode,
+                            gridMode,
+                            disableFocusIndicator,
+                            enableVideoMode,
+                            videoQuality
+                    );
+                    config.setTargetZoom(finalTargetZoom);
+                    config.setCentered(isCentered);
+
+                    bridge.saveCall(call);
+                    cameraStartCallbackId = call.getCallbackId();
+                    cameraXView.startSession(config);
+
+                    // Setup orientation listener to mirror iOS screenResize emission
+                    if (orientationListener == null) {
+                        lastOrientation = getContext().getResources().getConfiguration().orientation;
+                        lastOrientationStr = getDeviceOrientationString();
+                        orientationListener = new OrientationEventListener(getContext()) {
+                            @Override
+                            public void onOrientationChanged(int orientation) {
+                                if (orientation == ORIENTATION_UNKNOWN) return;
+                                int current = getContext().getResources().getConfiguration().orientation;
+                                String currentStr = getDeviceOrientationString();
+                                if (current != lastOrientation || !Objects.equals(currentStr, lastOrientationStr)) {
+                                    lastOrientation = current;
+                                    lastOrientationStr = currentStr;
+                                    // Post to next frame so WebView has updated bounds before we recompute layout
+                                    getBridge()
+                                            .getActivity()
+                                            .getWindow()
+                                            .getDecorView()
+                                            .post(() -> handleOrientationChange());
+                                }
+                            }
+                        };
+                        if (orientationListener.canDetectOrientation()) {
+                            orientationListener.enable();
+                        }
+                    }
+                });
     }
 
     private void handleOrientationChange() {
@@ -1261,17 +1261,17 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
         int current = getContext().getResources().getConfiguration().orientation;
         Log.d(TAG, "New orientation: " + current + " (1=PORTRAIT, 2=LANDSCAPE)");
         Log.d(
-            TAG,
-            "Screen dimensions - Pixels: " +
-                screenWidthPx +
-                "x" +
-                screenHeightPx +
-                ", DP: " +
-                screenWidthDp +
-                "x" +
-                screenHeightDp +
-                ", Density: " +
-                density
+                TAG,
+                "Screen dimensions - Pixels: " +
+                        screenWidthPx +
+                        "x" +
+                        screenHeightPx +
+                        ", DP: " +
+                        screenWidthDp +
+                        "x" +
+                        screenHeightDp +
+                        ", Density: " +
+                        density
         );
 
         // Get WebView dimensions before rotation
@@ -1283,119 +1283,119 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
         // Get current preview bounds before rotation
         int[] oldBounds = cameraXView.getCurrentPreviewBounds();
         Log.d(
-            TAG,
-            "Current preview bounds before rotation: x=" +
-                oldBounds[0] +
-                ", y=" +
-                oldBounds[1] +
-                ", width=" +
-                oldBounds[2] +
-                ", height=" +
-                oldBounds[3]
+                TAG,
+                "Current preview bounds before rotation: x=" +
+                        oldBounds[0] +
+                        ", y=" +
+                        oldBounds[1] +
+                        ", width=" +
+                        oldBounds[2] +
+                        ", height=" +
+                        oldBounds[3]
         );
 
         getBridge()
-            .getActivity()
-            .runOnUiThread(() -> {
-                // Create and show a black full-screen overlay during rotation
-                ViewGroup rootView = (ViewGroup) getBridge().getActivity().getWindow().getDecorView().getRootView();
+                .getActivity()
+                .runOnUiThread(() -> {
+                    // Create and show a black full-screen overlay during rotation
+                    ViewGroup rootView = (ViewGroup) getBridge().getActivity().getWindow().getDecorView().getRootView();
 
-                // Remove any existing overlay
-                if (rotationOverlay != null && rotationOverlay.getParent() != null) {
-                    ((ViewGroup) rotationOverlay.getParent()).removeView(rotationOverlay);
-                }
-
-                // Create new black overlay
-                rotationOverlay = new View(getContext());
-                rotationOverlay.setBackgroundColor(Color.BLACK);
-                ViewGroup.LayoutParams overlayParams = new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-                );
-                rotationOverlay.setLayoutParams(overlayParams);
-                rootView.addView(rotationOverlay);
-
-                // Reapply current aspect ratio to recompute layout, then emit screenResize
-                String ar = cameraXView.getAspectRatio();
-                Log.d(TAG, "Reapplying aspect ratio: " + ar);
-
-                // Re-get dimensions after potential layout pass
-                android.util.DisplayMetrics newMetrics = getContext().getResources().getDisplayMetrics();
-                int newScreenWidthPx = newMetrics.widthPixels;
-                int newScreenHeightPx = newMetrics.heightPixels;
-                int newWebViewWidth = webView.getWidth();
-                int newWebViewHeight = webView.getHeight();
-
-                Log.d(TAG, "New screen dimensions after rotation: " + newScreenWidthPx + "x" + newScreenHeightPx);
-                Log.d(TAG, "New WebView dimensions after rotation: " + newWebViewWidth + "x" + newWebViewHeight);
-
-                // Force aspect ratio recalculation on orientation change
-                cameraXView.forceAspectRatioRecalculation(ar, null, null, () -> {
-                    int[] bounds = cameraXView.getCurrentPreviewBounds();
-                    Log.d(
-                        TAG,
-                        "New bounds after orientation change: x=" +
-                            bounds[0] +
-                            ", y=" +
-                            bounds[1] +
-                            ", width=" +
-                            bounds[2] +
-                            ", height=" +
-                            bounds[3]
-                    );
-                    Log.d(
-                        TAG,
-                        "Bounds change: deltaX=" +
-                            (bounds[0] - oldBounds[0]) +
-                            ", deltaY=" +
-                            (bounds[1] - oldBounds[1]) +
-                            ", deltaWidth=" +
-                            (bounds[2] - oldBounds[2]) +
-                            ", deltaHeight=" +
-                            (bounds[3] - oldBounds[3])
-                    );
-
-                    JSObject data = new JSObject();
-                    data.put("x", bounds[0]);
-                    data.put("y", bounds[1]);
-                    data.put("width", bounds[2]);
-                    data.put("height", bounds[3]);
-                    notifyListeners("screenResize", data);
-
-                    // Also emit orientationChange with a unified string value matching iOS
-                    String o = getDeviceOrientationString();
-                    JSObject oData = new JSObject();
-                    oData.put("orientation", o);
-                    notifyListeners("orientationChange", oData);
-
-                    // Don't remove the overlay here - wait for camera to fully start
-                    // The overlay will be removed after a delay to ensure camera is stable
+                    // Remove any existing overlay
                     if (rotationOverlay != null && rotationOverlay.getParent() != null) {
-                        // Shorter delay for faster transition
-                        int delay = "4:3".equals(ar) ? 200 : 150;
-                        rotationOverlay.postDelayed(
-                            () -> {
-                                if (rotationOverlay != null && rotationOverlay.getParent() != null) {
-                                    rotationOverlay
-                                        .animate()
-                                        .alpha(0f)
-                                        .setDuration(100) // Faster fade out
-                                        .withEndAction(() -> {
-                                            if (rotationOverlay != null && rotationOverlay.getParent() != null) {
-                                                ((ViewGroup) rotationOverlay.getParent()).removeView(rotationOverlay);
-                                                rotationOverlay = null;
-                                            }
-                                        })
-                                        .start();
-                                }
-                            },
-                            delay
-                        );
+                        ((ViewGroup) rotationOverlay.getParent()).removeView(rotationOverlay);
                     }
 
-                    Log.d(TAG, "================================================================================");
+                    // Create new black overlay
+                    rotationOverlay = new View(getContext());
+                    rotationOverlay.setBackgroundColor(Color.BLACK);
+                    ViewGroup.LayoutParams overlayParams = new ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT
+                    );
+                    rotationOverlay.setLayoutParams(overlayParams);
+                    rootView.addView(rotationOverlay);
+
+                    // Reapply current aspect ratio to recompute layout, then emit screenResize
+                    String ar = cameraXView.getAspectRatio();
+                    Log.d(TAG, "Reapplying aspect ratio: " + ar);
+
+                    // Re-get dimensions after potential layout pass
+                    android.util.DisplayMetrics newMetrics = getContext().getResources().getDisplayMetrics();
+                    int newScreenWidthPx = newMetrics.widthPixels;
+                    int newScreenHeightPx = newMetrics.heightPixels;
+                    int newWebViewWidth = webView.getWidth();
+                    int newWebViewHeight = webView.getHeight();
+
+                    Log.d(TAG, "New screen dimensions after rotation: " + newScreenWidthPx + "x" + newScreenHeightPx);
+                    Log.d(TAG, "New WebView dimensions after rotation: " + newWebViewWidth + "x" + newWebViewHeight);
+
+                    // Force aspect ratio recalculation on orientation change
+                    cameraXView.forceAspectRatioRecalculation(ar, null, null, () -> {
+                        int[] bounds = cameraXView.getCurrentPreviewBounds();
+                        Log.d(
+                                TAG,
+                                "New bounds after orientation change: x=" +
+                                        bounds[0] +
+                                        ", y=" +
+                                        bounds[1] +
+                                        ", width=" +
+                                        bounds[2] +
+                                        ", height=" +
+                                        bounds[3]
+                        );
+                        Log.d(
+                                TAG,
+                                "Bounds change: deltaX=" +
+                                        (bounds[0] - oldBounds[0]) +
+                                        ", deltaY=" +
+                                        (bounds[1] - oldBounds[1]) +
+                                        ", deltaWidth=" +
+                                        (bounds[2] - oldBounds[2]) +
+                                        ", deltaHeight=" +
+                                        (bounds[3] - oldBounds[3])
+                        );
+
+                        JSObject data = new JSObject();
+                        data.put("x", bounds[0]);
+                        data.put("y", bounds[1]);
+                        data.put("width", bounds[2]);
+                        data.put("height", bounds[3]);
+                        notifyListeners("screenResize", data);
+
+                        // Also emit orientationChange with a unified string value matching iOS
+                        String o = getDeviceOrientationString();
+                        JSObject oData = new JSObject();
+                        oData.put("orientation", o);
+                        notifyListeners("orientationChange", oData);
+
+                        // Don't remove the overlay here - wait for camera to fully start
+                        // The overlay will be removed after a delay to ensure camera is stable
+                        if (rotationOverlay != null && rotationOverlay.getParent() != null) {
+                            // Shorter delay for faster transition
+                            int delay = "4:3".equals(ar) ? 200 : 150;
+                            rotationOverlay.postDelayed(
+                                    () -> {
+                                        if (rotationOverlay != null && rotationOverlay.getParent() != null) {
+                                            rotationOverlay
+                                                    .animate()
+                                                    .alpha(0f)
+                                                    .setDuration(100) // Faster fade out
+                                                    .withEndAction(() -> {
+                                                        if (rotationOverlay != null && rotationOverlay.getParent() != null) {
+                                                            ((ViewGroup) rotationOverlay.getParent()).removeView(rotationOverlay);
+                                                            rotationOverlay = null;
+                                                        }
+                                                    })
+                                                    .start();
+                                        }
+                                    },
+                                    delay
+                            );
+                        }
+
+                        Log.d(TAG, "================================================================================");
+                    });
                 });
-            });
     }
 
     /**
@@ -1491,8 +1491,8 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
             PluginCall finalQueuedCall = queuedCall;
             Log.d(TAG, "onCameraStopped: replaying pending start request");
             getBridge()
-                .getActivity()
-                .runOnUiThread(() -> start(finalQueuedCall));
+                    .getActivity()
+                    .runOnUiThread(() -> start(finalQueuedCall));
         }
     }
 
@@ -1548,19 +1548,19 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
             Log.d("CameraPreview", "8. EDGE-TO-EDGE - " + (isEdgeToEdgeActive ? "ACTIVE" : "INACTIVE"));
             Log.d("CameraPreview", "9. WEBVIEW INSET - " + webViewTopInset);
             Log.d(
-                "CameraPreview",
-                "10. RELATIVE Y - " + relativeY + " (y=" + y + (isEdgeToEdgeActive ? " - inset=" + webViewTopInset : " unchanged") + ")"
+                    "CameraPreview",
+                    "10. RELATIVE Y - " + relativeY + " (y=" + y + (isEdgeToEdgeActive ? " - inset=" + webViewTopInset : " unchanged") + ")"
             );
             Log.d(
-                "CameraPreview",
-                "11. RETURNED (logical) - x=" +
-                    (x / pixelRatio) +
-                    ", y=" +
-                    (relativeY / pixelRatio) +
-                    ", width=" +
-                    (width / pixelRatio) +
-                    ", height=" +
-                    (height / pixelRatio)
+                    "CameraPreview",
+                    "11. RETURNED (logical) - x=" +
+                            (x / pixelRatio) +
+                            ", y=" +
+                            (relativeY / pixelRatio) +
+                            ", width=" +
+                            (width / pixelRatio) +
+                            ", height=" +
+                            (height / pixelRatio)
             );
             Log.d("CameraPreview", "12. PIXEL RATIO - " + pixelRatio);
             Log.d("CameraPreview", "========================");
@@ -1579,19 +1579,19 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
             Log.d("CameraPreview", "Pixel values: x=" + x + ", y=" + relativeY + ", width=" + width + ", height=" + height);
             Log.d("CameraPreview", "Pixel ratio: " + pixelRatio);
             Log.d(
-                "CameraPreview",
-                "Logical values (exact): x=" + logicalX + ", y=" + logicalY + ", width=" + logicalWidth + ", height=" + logicalHeight
+                    "CameraPreview",
+                    "Logical values (exact): x=" + logicalX + ", y=" + logicalY + ", width=" + logicalWidth + ", height=" + logicalHeight
             );
             Log.d(
-                "CameraPreview",
-                "Logical values (rounded): x=" +
-                    Math.round(logicalX) +
-                    ", y=" +
-                    Math.round(logicalY) +
-                    ", width=" +
-                    Math.round(logicalWidth) +
-                    ", height=" +
-                    Math.round(logicalHeight)
+                    "CameraPreview",
+                    "Logical values (rounded): x=" +
+                            Math.round(logicalX) +
+                            ", y=" +
+                            Math.round(logicalY) +
+                            ", width=" +
+                            Math.round(logicalWidth) +
+                            ", height=" +
+                            Math.round(logicalHeight)
             );
 
             // Check if previewContainer has any padding or margin that might cause offset
@@ -1599,29 +1599,29 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
                 View previewContainer = cameraXView.getPreviewContainer();
                 if (previewContainer != null) {
                     Log.d(
-                        "CameraPreview",
-                        "PreviewContainer padding: left=" +
-                            previewContainer.getPaddingLeft() +
-                            ", top=" +
-                            previewContainer.getPaddingTop() +
-                            ", right=" +
-                            previewContainer.getPaddingRight() +
-                            ", bottom=" +
-                            previewContainer.getPaddingBottom()
+                            "CameraPreview",
+                            "PreviewContainer padding: left=" +
+                                    previewContainer.getPaddingLeft() +
+                                    ", top=" +
+                                    previewContainer.getPaddingTop() +
+                                    ", right=" +
+                                    previewContainer.getPaddingRight() +
+                                    ", bottom=" +
+                                    previewContainer.getPaddingBottom()
                     );
                     ViewGroup.LayoutParams params = previewContainer.getLayoutParams();
                     if (params instanceof ViewGroup.MarginLayoutParams) {
                         ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) params;
                         Log.d(
-                            "CameraPreview",
-                            "PreviewContainer margins: left=" +
-                                marginParams.leftMargin +
-                                ", top=" +
-                                marginParams.topMargin +
-                                ", right=" +
-                                marginParams.rightMargin +
-                                ", bottom=" +
-                                marginParams.bottomMargin
+                                "CameraPreview",
+                                "PreviewContainer margins: left=" +
+                                        marginParams.leftMargin +
+                                        ", top=" +
+                                        marginParams.topMargin +
+                                        ", right=" +
+                                        marginParams.rightMargin +
+                                        ", bottom=" +
+                                        marginParams.bottomMargin
                         );
                     }
                 }
@@ -1630,24 +1630,24 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
 
             // Log what we're returning
             Log.d(
-                "CameraPreview",
-                "Returning to JS - x: " +
-                    logicalX +
-                    " (from " +
-                    logicalX +
-                    "), y: " +
-                    logicalY +
-                    " (from " +
-                    logicalY +
-                    "), width: " +
-                    logicalWidth +
-                    " (from " +
-                    logicalWidth +
-                    "), height: " +
-                    logicalHeight +
-                    " (from " +
-                    logicalHeight +
-                    ")"
+                    "CameraPreview",
+                    "Returning to JS - x: " +
+                            logicalX +
+                            " (from " +
+                            logicalX +
+                            "), y: " +
+                            logicalY +
+                            " (from " +
+                            logicalY +
+                            "), width: " +
+                            logicalWidth +
+                            " (from " +
+                            logicalWidth +
+                            "), height: " +
+                            logicalHeight +
+                            " (from " +
+                            logicalHeight +
+                            ")"
             );
 
             // Transition window and webview backgrounds to transparent now that camera is ready
@@ -1655,19 +1655,19 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
             // Both are set together in the same UI thread operation to avoid race conditions
             if (isToBackMode()) {
                 getBridge()
-                    .getActivity()
-                    .runOnUiThread(() -> {
-                        try {
-                            // Set window background to transparent
-                            getBridge().getActivity().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                            // Set webview background to almost-transparent for MIUI compatibility
-                            // Use alpha=1 instead of 0 to work around MIUI/Xiaomi rendering issues
-                            // where Color.TRANSPARENT (alpha=0) is not rendered correctly
-                            getBridge().getWebView().setBackgroundColor(Color.argb(1, 255, 255, 255));
-                        } catch (Exception e) {
-                            Log.w(TAG, "Failed to set backgrounds to transparent", e);
-                        }
-                    });
+                        .getActivity()
+                        .runOnUiThread(() -> {
+                            try {
+                                // Set window background to transparent
+                                getBridge().getActivity().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                // Set webview background to almost-transparent for MIUI compatibility
+                                // Use alpha=1 instead of 0 to work around MIUI/Xiaomi rendering issues
+                                // where Color.TRANSPARENT (alpha=0) is not rendered correctly
+                                getBridge().getWebView().setBackgroundColor(Color.TRANSPARENT);
+                            } catch (Exception e) {
+                                Log.w(TAG, "Failed to set backgrounds to transparent", e);
+                            }
+                        });
             }
 
             call.resolve(result);
@@ -1719,14 +1719,14 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
             if (backgroundToRestore != null) {
                 originalWindowBackground = null; // Clear immediately so other threads won't restore
                 getBridge()
-                    .getActivity()
-                    .runOnUiThread(() -> {
-                        try {
-                            getBridge().getActivity().getWindow().setBackgroundDrawable(backgroundToRestore);
-                        } catch (Exception e) {
-                            Log.w(TAG, "Failed to restore window background on error", e);
-                        }
-                    });
+                        .getActivity()
+                        .runOnUiThread(() -> {
+                            try {
+                                getBridge().getActivity().getWindow().setBackgroundDrawable(backgroundToRestore);
+                            } catch (Exception e) {
+                                Log.w(TAG, "Failed to restore window background on error", e);
+                            }
+                        });
             }
         }
     }
@@ -1893,8 +1893,8 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
         }
 
         boolean disableAudio = call.getBoolean("disableAudio") != null
-            ? Boolean.TRUE.equals(call.getBoolean("disableAudio"))
-            : this.lastDisableAudio;
+                ? Boolean.TRUE.equals(call.getBoolean("disableAudio"))
+                : this.lastDisableAudio;
         this.lastDisableAudio = disableAudio;
         String permissionAlias = disableAudio ? CAMERA_ONLY_PERMISSION_ALIAS : CAMERA_WITH_AUDIO_PERMISSION_ALIAS;
 
@@ -1921,27 +1921,27 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
             bridge.saveCall(call);
             final String cbId = call.getCallbackId();
             cameraXView.stopRecordVideo(
-                new CameraXView.VideoRecordingCallback() {
-                    @Override
-                    public void onSuccess(String filePath) {
-                        PluginCall saved = bridge.getSavedCall(cbId);
-                        if (saved != null) {
-                            JSObject result = new JSObject();
-                            result.put("videoFilePath", filePath);
-                            saved.resolve(result);
-                            bridge.releaseCall(saved);
+                    new CameraXView.VideoRecordingCallback() {
+                        @Override
+                        public void onSuccess(String filePath) {
+                            PluginCall saved = bridge.getSavedCall(cbId);
+                            if (saved != null) {
+                                JSObject result = new JSObject();
+                                result.put("videoFilePath", filePath);
+                                saved.resolve(result);
+                                bridge.releaseCall(saved);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onError(String message) {
-                        PluginCall saved = bridge.getSavedCall(cbId);
-                        if (saved != null) {
-                            saved.reject("Failed to stop video recording: " + message);
-                            bridge.releaseCall(saved);
+                        @Override
+                        public void onError(String message) {
+                            PluginCall saved = bridge.getSavedCall(cbId);
+                            if (saved != null) {
+                                saved.reject("Failed to stop video recording: " + message);
+                                bridge.releaseCall(saved);
+                            }
                         }
                     }
-                }
             );
         } catch (Exception e) {
             call.reject("Failed to stop video recording: " + e.getMessage());
@@ -1955,8 +1955,8 @@ public class CameraPreview extends Plugin implements CameraXView.CameraXViewList
 
         // Check if either permission is granted (mirroring handleCameraPermissionResult)
         if (
-            PermissionState.GRANTED.equals(getPermissionState(CAMERA_ONLY_PERMISSION_ALIAS)) ||
-            PermissionState.GRANTED.equals(getPermissionState(CAMERA_WITH_AUDIO_PERMISSION_ALIAS))
+                PermissionState.GRANTED.equals(getPermissionState(CAMERA_ONLY_PERMISSION_ALIAS)) ||
+                        PermissionState.GRANTED.equals(getPermissionState(CAMERA_WITH_AUDIO_PERMISSION_ALIAS))
         ) {
             try {
                 cameraXView.startRecordVideo();

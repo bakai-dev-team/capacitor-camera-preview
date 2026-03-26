@@ -1065,7 +1065,7 @@ extension CameraController {
                 self.addGPSMetadata(to: image, location: location)
             }
 
-            var finalImage = image
+            var finalImage = image.fixedOrientation() ?? image
 
             // Determine what to do based on parameters
             if width != nil || height != nil {
